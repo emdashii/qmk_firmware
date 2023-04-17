@@ -18,13 +18,14 @@
 #include QMK_KEYBOARD_H
 #include "keycodes.h"
 
+
+
 static const char qwerty_leds[] = {22, 19, 16, 11, 38, 43, 46, 49};
 static const char gaming_leds[] = {18, 22, 19, 16, 13};
 static const char sym_leds[] = {22,19,16,11,21,20,15,12,34,35,38,39,43,23,25,7,49,48};
 static const char nav_leds[] = {38, 43, 44, 46};
 static const char num_leds[] = {45, 44, 37, 46, 43, 38, 47, 42, 39, 40};
 static const char fun_leds[] = {45, 44, 37, 46, 43, 38, 47, 42, 39, 50, 49, 48};
-static const char mouse_leds[] = {11, 16, 17, 19};
 static const char adjust_leds[] = {25, 22, 19, 16, 26, 21, 20, 15};
 static const char top_right_leds[] = {23, 18, 17, 10, 9};
 static const char adjust_other_leds[] = {36, 37, 44, 50, 51, 49, 9};
@@ -39,8 +40,8 @@ static const char adjust_other_leds[] = {36, 37, 44, 50, 51, 49, 9};
   _FUNCTION = RGB_MAGENTA
   _ADJUST = RGB_RED
 */
-/*
-void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (host_keyboard_led_state().caps_lock) {
         rgb_matrix_set_color(13, RGB_RED);
     }
@@ -57,7 +58,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         case _NAVIGATION:
             for (uint8_t i = 0; i < 4; i++) {
                 rgb_matrix_set_color(nav_leds[i], RGB_PINK);
-                rgb_matrix_set_color(mouse_leds[i], RGB_PINK);
             }
             rgb_matrix_set_color(6, RGB_CORAL);            // To qwerty
             rgb_matrix_set_color(41, RGB_RED);              // To Adjust
@@ -78,7 +78,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             for (uint8_t i = 0; i < 10; i++) {
                 rgb_matrix_set_color(num_leds[i], RGB_GOLDENROD);
             }
-            for (uint8_t i = 0; i < 20; i++) {
+            for (uint8_t i = 0; i < 18; i++) {
                 rgb_matrix_set_color(sym_leds[i], RGB_ORANGE);
             }
             for (uint8_t i = 0; i < 5; i++) {
@@ -104,7 +104,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             for (uint8_t i = 0; i < 8; i++) {
                 rgb_matrix_set_color(adjust_leds[i], RGB_RED);
             }
-            for (uint8_t i = 0; i < 9; i++) {
+            for (uint8_t i = 0; i < 7; i++) {
                 rgb_matrix_set_color(adjust_other_leds[i], RGB_RED);
             }
             rgb_matrix_set_color(6, RGB_CORAL);            // To qwerty
@@ -113,7 +113,8 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(35, RGB_GOLDENROD);        // To number
             break;
     }
-}*/
+    return false;
+}
 
 // CRKBD LED TEMPLATE (learned through much thought (and trial and error))
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
