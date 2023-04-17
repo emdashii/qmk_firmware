@@ -129,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                             |        |        | QWERTY |  | Gaming |  Nav   |        |
 //                             `--------------------------'  `--------------------------'
   [_ADJUST] = LAYOUT_split_3x6_3(
-      XXXXXXX,   RESET, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,                       KC_NUM, KC_CAPS, KC_SCRL, KC_BRIU, KC_VOLU, XXXXXXX,
+      XXXXXXX,  QK_RBT, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,                       KC_NUM, KC_CAPS, KC_SCRL, KC_BRIU, KC_VOLU, XXXXXXX,
       XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_VOLD, XXXXXXX,
       XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      SQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE, XXXXXXX,
                                           XXXXXXX, XXXXXXX, LQWERTY,      LMINECR,  LNAV, XXXXXXX
@@ -149,7 +149,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LADJUST:
             if  (!host_keyboard_led_state().num_lock) {
-                tap_code(KC_NUMLOCK);
+                tap_code(KC_NUM_LOCK);
             }
         return true;
         break;
