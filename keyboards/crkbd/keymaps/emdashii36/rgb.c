@@ -39,7 +39,7 @@ static const char adjust_other_leds[] = {36, 37, 44, 50, 51, 49, 9};
   _FUNCTION = RGB_MAGENTA
   _ADJUST = RGB_RED
 */
-
+/*
 void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (host_keyboard_led_state().caps_lock) {
         rgb_matrix_set_color(13, RGB_RED);
@@ -63,7 +63,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(41, RGB_RED);              // To Adjust
             rgb_matrix_set_color(15, RGB_MAGENTA);          // To Function keys
             break;
-        case _GAMING:
+        case _MINECRAFT:
             if (is_keyboard_master()) {
                 for (uint8_t i = 0; i < 5; i++) {
                     rgb_matrix_set_color(gaming_leds[i], RGB_SPRINGGREEN);
@@ -78,10 +78,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             for (uint8_t i = 0; i < 10; i++) {
                 rgb_matrix_set_color(num_leds[i], RGB_GOLDENROD);
             }
-            for (uint8_t i = 0; i < 5; i++) {
-                rgb_matrix_set_color(top_right_leds[i], RGB_GOLDENROD);
-            }
-            rgb_matrix_set_color(6, RGB_CORAL);            // To qwerty
             for (uint8_t i = 0; i < 20; i++) {
                 rgb_matrix_set_color(sym_leds[i], RGB_ORANGE);
             }
@@ -117,7 +113,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(35, RGB_GOLDENROD);        // To number
             break;
     }
-}
+}*/
 
 // CRKBD LED TEMPLATE (learned through much thought (and trial and error))
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
