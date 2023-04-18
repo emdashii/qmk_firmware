@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |    "   |Tab Back|        |Tab Fwd |        |                    |   ~    |   _    |        |        |        |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |        |        | QWERTY |  | Number |  Spc   |  Bksp  |
+//                             |  LFUN  |  LNAV  | QWERTY |  | Number |  Spc   |  Bksp  |
 //                             `--------------------------'  `--------------------------'
   [_NAVIGATION] = LAYOUT_split_3x6_3(
      XXXXXXX,  KC_GRV, KC_HOME,  KC_UP,  KC_END, KC_PGUP,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_INSERT, KC_ESC, XXXXXXX,
