@@ -46,6 +46,8 @@ enum crkbd_layers {
 #define LNUM    TO(_NUMBER)
 #define LFUN    TO(_FUNCTION)
 #define LMINECR TO(_MINECRAFT)
+#define FNUMBER LT(_NUMBER, KC_TAB)
+#define FNAV    LT(_NAVIGATION, KC_ENT)  
 
 // Misc combined keys
 #define CTRLSPC LCTL_T(KC_SPC)
@@ -57,8 +59,6 @@ enum crkbd_layers {
 // NEW for this keymap
 #define MEH_SPC MEH_T(KC_SPC)
 #define SFT_SFT LSFT_T(OSM(KC_LSFT)) // hold for shift, or tap to shift one key
-#define NUM_G   LT(_NUMBER, KC_G)
-#define NUM_H   LT(_NUMBER, KC_H)
 #define FUN_B   LT(_FUNCTION, KC_B)
 #define FUN_N   LT(_FUNCTION, KC_N)
 
