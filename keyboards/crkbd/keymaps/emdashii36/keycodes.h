@@ -38,6 +38,16 @@ enum crkbd_layers {
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
+// Left-hand thumb keys
+#define TDELFUN LT(_FUNCTION, KC_DEL)
+#define TTABNAV LT(_NAVIGATION, KC_TAB)
+#define TENTNUM LT(_NUMBER, KC_ENT)
+
+// Right-hand thumb keys
+#define TNAVNUM LT(_NUMBER, TO(_NAVIGATION))
+#define TSPCNAV LT(_NAVIGATION, KC_SPC)
+#define TBKSFUN LT(_FUNCTION, KC_BSPC)
+
 // Special layer navigation keys
 #define SQWERTY DF(_QWERTY) // sets qwerty as base layer
 #define LQWERTY TO(_QWERTY)
@@ -46,8 +56,6 @@ enum crkbd_layers {
 #define LNUM    TO(_NUMBER)
 #define LFUN    TO(_FUNCTION)
 #define LMINECR TO(_MINECRAFT)
-#define FNUMBER LT(_NUMBER, KC_TAB)
-#define FNAV    LT(_NAVIGATION, KC_ENT)  
 
 // Misc combined keys
 #define CTRLSPC LCTL_T(KC_SPC)
@@ -55,12 +63,6 @@ enum crkbd_layers {
 #define COLON S(KC_SCLN)
 #define TABLGUI LGUI_T(KC_TAB)
 #define LCAPSFT LSFT_T(KC_CAPS)
-
-// NEW for this keymap
-#define MEH_SPC MEH_T(KC_SPC)
-#define SFT_SFT LSFT_T(OSM(KC_LSFT)) // hold for shift, or tap to shift one key
-#define FUN_B   LT(_FUNCTION, KC_B)
-#define FUN_N   LT(_FUNCTION, KC_N)
 
 // Tab movement
 #define TABFWRD C(KC_TAB)
