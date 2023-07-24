@@ -96,7 +96,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(6, RGB_CORAL);            // To qwerty
             rgb_matrix_set_color(13, RGB_SPRINGGREEN);      // To gaming
             rgb_matrix_set_color(40, RGB_PINK);             // To navigation
-            rgb_matrix_set_color(6, RGB_RED);               // To Adjust
+            rgb_matrix_set_color(33, RGB_RED);               // To Adjust
             break;
         case _ADJUST:
             rgb_matrix_set_color(23, RGB_GREEN);            // Reset key
