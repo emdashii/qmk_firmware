@@ -57,6 +57,7 @@ enum crkbd_layers {
 #define LFUN    TO(_FUNCTION)
 #define LMINECR TO(_MINECRAFT)
 #define LTHUMBX LT(_NAVIGATION, KC_X)
+#define LTHUMBE LT(_NAVIGATION, KC_E)
 
 // Misc combined keys
 #define CTRLSPC LCTL_T(KC_SPC)
