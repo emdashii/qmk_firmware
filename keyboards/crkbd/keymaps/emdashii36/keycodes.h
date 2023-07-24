@@ -39,14 +39,14 @@ enum crkbd_layers {
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
 // Left-hand thumb keys
-#define TDELFUN LT(_FUNCTION, KC_DEL)
-#define TTABNAV LT(_NAVIGATION, KC_TAB)
-#define TENTNUM LT(_NUMBER, KC_ENT)
+#define TDELFUN LT(_FUNCTION, KC_DEL) // Put function keys on left hand
+#define TTABNAV LT(_NAVIGATION, KC_TAB) // Use the tab, nothing else
+#define TENTNUM LT(_NUMBER, KC_ENT) // Good
 
 // Right-hand thumb keys
-#define TNAVNUM LT(_NUMBER, TO(_NAVIGATION))
-#define TSPCNAV LT(_NAVIGATION, KC_SPC)
-#define TBKSFUN LT(_FUNCTION, KC_BSPC)
+// TENTNUM repeated on RH
+#define TSPCNAV LT(_NAVIGATION, KC_SPC) // Good
+#define TBKSFUN LT(_FUNCTION, KC_BSPC) // Kept function keys on right hand
 
 // Special layer navigation keys
 #define SQWERTY DF(_QWERTY) // sets qwerty as base layer
@@ -56,6 +56,7 @@ enum crkbd_layers {
 #define LNUM    TO(_NUMBER)
 #define LFUN    TO(_FUNCTION)
 #define LMINECR TO(_MINECRAFT)
+#define LTHUMBX LT(_NAVIGATION, KC_X)
 
 // Misc combined keys
 #define CTRLSPC LCTL_T(KC_SPC)
@@ -64,8 +65,3 @@ enum crkbd_layers {
 #define TABLGUI LGUI_T(KC_TAB)
 #define LCAPSFT LSFT_T(KC_CAPS)
 
-// Tab movement
-#define TABFWRD C(KC_TAB)
-#define TABBKWD C(S(KC_TAB))
-
-//OSM(MOD_LSFT) One Shot Modifer Shift Key

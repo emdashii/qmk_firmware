@@ -41,8 +41,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x6_3(
       XXXXXXX,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  XXXXXXX,
       XXXXXXX,  HOME_A,  HOME_S,  HOME_D,  HOME_F,    KC_G,                         KC_H,  HOME_J,  HOME_K,  HOME_L,HOME_SCLN, XXXXXXX,
-      XXXXXXX,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  XXXXXXX,
-                                           TDELFUN, TTABNAV, TENTNUM,       TNAVNUM, TSPCNAV,  TBKSFUN
+      XXXXXXX,    KC_Z, LTHUMBX,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  XXXXXXX,
+                                           TDELFUN, TTABNAV, TENTNUM,       TENTNUM, TSPCNAV,  TBKSFUN
 
   ),
 
@@ -52,15 +52,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |    '   |  Left  |  Down  | Right  | Pg Dn  |                    |   +    |  Ctrl  |  Shift |  Alt   |  Gui   |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//  |    "   |Tab Back|        |Tab Fwd |        |                    |   ~    |   _    |        |        |        |
+//  |    "   |        |        |        |        |                    |   ~    |   _    |        |        |        |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |  LFUN  |  LNAV  | QWERTY |  | Number |  Spc   |  Bksp  |
+//                             |  LFUN  |  LNAV  | QWERTY |  |        |        |        |
 //                             `--------------------------'  `--------------------------'
   [_NAVIGATION] = LAYOUT_split_3x6_3(
      XXXXXXX,  KC_GRV, KC_HOME,  KC_UP,  KC_END, KC_PGUP,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_INSERT, KC_ESC, XXXXXXX,
      XXXXXXX, KC_QUOT, KC_LEFT,KC_DOWN, KC_RGHT, KC_PGDN,                      KC_PPLS, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI, XXXXXXX,
-     XXXXXXX, KC_DQUO, TABBKWD, XXXXXXX, TABFWRD, XXXXXXX,                     KC_TILD, KC_UNDS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                          XXXXXXX, XXXXXXX, LQWERTY,       LNUM, KC_SPC, KC_BSPC
+     XXXXXXX, KC_DQUO, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     KC_TILD, KC_UNDS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                         KC_BKSP, KC_SPC, LQWERTY,       XXXXXXX, XXXXXXX, XXXXXXX
 
   ),
 
@@ -90,31 +90,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |   )    |   >    |   }    |   ]    |   |    |                    |   :    |   1    |   2    |   3    |   /    |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |   Del  |Spc/Ctrl| QWERTY |  |Function|   0    |  Bksp  |
+//                             |        |Minecraf| QWERTY |  |   .    |   0    |  Bksp  |
 //                             `--------------------------'  `--------------------------'
   [_NUMBER] = LAYOUT_split_3x6_3(
       XXXXXXX, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_DOT,    KC_7,    KC_8,    KC_9, KC_PPLS, XXXXXXX,
       XXXXXXX, KC_LPRN,S(KC_COMM),KC_LCBR,KC_LBRC, KC_BSLS,                       KC_EQL,    KC_4,    KC_5,    KC_6, KC_MINS, XXXXXXX,
       XXXXXXX, KC_RPRN,S(KC_DOT),KC_RCBR, KC_RBRC, KC_PIPE,                        COLON,    KC_1,    KC_2,    KC_3, KC_SLSH, XXXXXXX,
-                                           KC_DEL, CTRLSPC,  LQWERTY,       LFUN,   KC_0,  KC_BSPC
+                                           XXXXXXX, LMINECR,  LQWERTY,       KC_DOT,   KC_0,  KC_BSPC
 
   ),
 
 // Fuction/Mouse
 //  ,--------------------------------------------.                    ,--------------------------------------------.
-//  |  Acl0  | Wh up  | Ms up  | Wh dn  |Mid Clic|                    |Mid Clic|   F7   |   F8   |   F9   |   F10  |        
+//  |  Acl0  | Wh up  | Ms up  | Wh dn  |Mid Clic|                    |Mid Clic|   F7   |   F8   |   F9   |   F10  |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//  |  Acl1  | Ms lft | Ms dn  | Ms rgt |Rt Click|                    |Rt Click|   F4   |   F5   |   F6   |   F11  |        
+//  |  Acl1  | Ms lft | Ms dn  | Ms rgt |Rt Click|                    |Rt Click|   F4   |   F5   |   F6   |   F11  |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//  |  Acl2  | Wh lft |        | Wh rgt |LeftClic|                    |LeftClic|   F1   |   F2   |   F3   |   F12  |        
+//  |  Acl2  | Wh lft |        | Wh rgt |LeftClic|                    |LeftClic|   F1   |   F2   |   F3   |   F12  |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |        |  Num   | QWERTY |  | Adjsut |  Nav   |Minecraft|
+//                             |        |Minecraf| QWERTY |  | Adjsut |  Nav   |        |
 //                             `--------------------------'  `--------------------------'
   [_FUNCTION] = LAYOUT_split_3x6_3(
       XXXXXXX, KC_ACL0, KC_WH_U, KC_MS_U, KC_WH_D, KC_BTN3,                        KC_BTN3,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX,
       XXXXXXX, KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN1,                        KC_BTN1,   KC_F4,   KC_F5,   KC_F6,  KC_F11, XXXXXXX,
       XXXXXXX, KC_ACL2, KC_WH_L, XXXXXXX, KC_WH_R, KC_BTN2,                        KC_BTN2,   KC_F1,   KC_F2,   KC_F3,  KC_F12, XXXXXXX,
-                                          XXXXXXX,    LNUM, LQWERTY,        LADJUST,  LNAV, LMINECR
+                                          XXXXXXX, LMINECR, LQWERTY,        LADJUST,  LNAV, XXXXXXX
 
   ),
 
@@ -126,13 +126,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  | Cycle  | Hue ↓  | Sat ↓  | Brght ↓|        |                    |SetQWERTY|       |        |        |  Mute  |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |        |        | QWERTY |  | Gaming |  Nav   |        |
+//                             |        |Minecraf| QWERTY |  |        |  Nav   | Gaming |
 //                             `--------------------------'  `--------------------------'
   [_ADJUST] = LAYOUT_split_3x6_3(
       XXXXXXX,  QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,                       KC_NUM, KC_CAPS, KC_SCRL, KC_BRIU, KC_VOLU, XXXXXXX,
       XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_VOLD, XXXXXXX,
       XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      SQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE, XXXXXXX,
-                                          XXXXXXX, XXXXXXX, LQWERTY,      LMINECR,  LNAV, XXXXXXX
+                                          XXXXXXX, LMINECR, LQWERTY,      XXXXXXX,  LNAV, LMINECR
   )
 };
 
