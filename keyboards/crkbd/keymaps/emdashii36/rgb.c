@@ -80,9 +80,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             for (uint8_t i = 0; i < 10; i++) {
                 rgb_matrix_set_color(num_leds[i], RGB_GOLDENROD);
             }
-            // for (uint8_t i = 0; i < 18; i++) {
-            //     rgb_matrix_set_color(sym_leds[i], RGB_ORANGE);
-            // }
+            for (uint8_t i = 0; i < 8; i++) {
+                rgb_matrix_set_color(sym_leds[i], RGB_ORANGE);
+            }
             rgb_matrix_set_color(6, RGB_CORAL);            // To qwerty
             rgb_matrix_set_color(13, RGB_SPRINGGREEN);      // To gaming
             break;

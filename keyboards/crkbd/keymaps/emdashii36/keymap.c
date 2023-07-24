@@ -25,28 +25,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef OLED_ENABLE
 #endif
 
+// Writing down magic works to make flashing easier in the future:
+// Open QMK MSYS
+// qmk compile -kb crkbd/rev1 -km emdashii36
+// qmk flash -kb crkbd/rev1 -km emdashii36
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // QWERTY
 //  ,--------------------------------------------.                    ,--------------------------------------------.
-//  |   Q    |   W    |   E    |   R    |   T    |                    |   Y    |   U    |   I    |   O    |   P    |
+//  |   Q    |   W    |   E/nav|   R    |   T    |                    |   Y    |   U    |   I    |   O    |   P    |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |  A/GUI | S/ALT  | D/SHIFT| F/CTRL |   G    |                    |   H    | J/CTRL | K/SHIFT| L/ALT  | ;/GUI  |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//  |   Z    |   X    |   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    |
+//  |   Z    |   X/nav|   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
 //                             |   Del  |  Tab   |  Enter |  |  Nav   |  Spc   |  Bksp  |
 //                             `--------------------------'  `--------------------------'
   [_QWERTY] = LAYOUT_split_3x6_3(
-      XXXXXXX,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  XXXXXXX,
+      XXXXXXX,    KC_Q,    KC_W, LTHUMBE,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  XXXXXXX,
       XXXXXXX,  HOME_A,  HOME_S,  HOME_D,  HOME_F,    KC_G,                         KC_H,  HOME_J,  HOME_K,  HOME_L,HOME_SCLN, XXXXXXX,
       XXXXXXX,    KC_Z, LTHUMBX,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  XXXXXXX,
                                            TDELFUN, TTABNAV, TENTNUM,       TENTNUM, TSPCNAV,  TBKSFUN
 
   ),
 
-//  Navigation
+//  Navigation test
 //  ,--------------------------------------------.                    ,--------------------------------------------.
 //  |    `   |  Home  |   Up   |  End   | Pg Up  |                    |   ^    |   &    |   *    | Insert |  Esc   |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -54,13 +58,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |    "   |        |        |        |        |                    |   ~    |   _    |        |        |        |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |  LFUN  |  LNAV  | QWERTY |  |        |        |        |
+//                             |  BKSP  |  Space | QWERTY |  |        |        |        |
 //                             `--------------------------'  `--------------------------'
   [_NAVIGATION] = LAYOUT_split_3x6_3(
      XXXXXXX,  KC_GRV, KC_HOME,  KC_UP,  KC_END, KC_PGUP,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_INSERT, KC_ESC, XXXXXXX,
      XXXXXXX, KC_QUOT, KC_LEFT,KC_DOWN, KC_RGHT, KC_PGDN,                      KC_PPLS, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI, XXXXXXX,
      XXXXXXX, KC_DQUO, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     KC_TILD, KC_UNDS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                         KC_BKSP, KC_SPC, LQWERTY,       XXXXXXX, XXXXXXX, XXXXXXX
+                                         KC_BSPC, KC_SPC, LQWERTY,       XXXXXXX, XXXXXXX, XXXXXXX
 
   ),
 
