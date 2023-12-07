@@ -38,10 +38,10 @@ enum crkbd_layers {
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
 // Nav home row mods KC_LPRN,S(KC_COMM),KC_LCBR,KC_LBRC,
-#define NAV_PRN LGUI_T(KC_LPRN)
-#define NAV_ABK LALT_T(KC_LABK)
-#define NAV_CBR LSFT_T(KC_LCBR)
-#define NAV_BRC LCTL_T(KC_LBRC)
+//#define NAV_PRN LGUI_T(KC_LPRN)
+//#define NAV_ABK LALT_T(KC_LABK)
+#define NAV_RBR LSFT_T(KC_LBRC)
+#define NAV_LBR LCTL_T(KC_RBRC)
 
 // Left-hand thumb keys
 #define TDELNUM LT(_NUMBER, KC_DEL)
