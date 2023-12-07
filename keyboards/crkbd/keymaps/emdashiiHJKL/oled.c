@@ -42,14 +42,11 @@ void oled_render_layer_state(void) {
         case _NAVIGATION:
             oled_write_ln_P(PSTR("Navigation"), false);
             break;
-        case _MINECRAFT:
+        case _GAMING:
             oled_write_ln_P(PSTR("Minecraft"), false);
             break;
         case _NUMBER:
             oled_write_ln_P(PSTR("Numbers"), false);
-            break;
-        case _FUNCTION:
-            oled_write_ln_P(PSTR("Fn Keys"), false);
             break;
         case _ADJUST:
             oled_write_ln_P(PSTR("Settings"), false);
