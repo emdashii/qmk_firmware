@@ -62,8 +62,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                             `--------------------------'  `--------------------------'
   [_NAVIGATION] = LAYOUT_split_3x6_3(
      XXXXXXX, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                     KC_CIRC, KC_AMPR, KC_ASTR, KC_UNDS, KC_TILD, XXXXXXX,
-     XXXXXXX, NAV_PRN, NAV_ABK, NAV_CBR, NAV_BRC, KC_BSLS,                     KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_INS, XXXXXXX,
-     XXXXXXX, KC_RPRN,S(KC_DOT),KC_RCBR, KC_RBRC, KC_PIPE,                     KC_PGUP, KC_HOME,  KC_END, KC_PGDN,  KC_ESC, XXXXXXX,
+     XXXXXXX, KC_LGUI, KC_LALT, NAV_RBR, NAV_LBR, KC_BSLS,                     KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_INS, XXXXXXX,
+     XXXXXXX, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_PIPE,                     KC_PGUP, KC_HOME,  KC_END, KC_PGDN,  KC_ESC, XXXXXXX,
                                          KC_BSPC, KC_SPC, LQWERTY,       TENTCTL, KC_TAB, KC_DEL
 
   ),
