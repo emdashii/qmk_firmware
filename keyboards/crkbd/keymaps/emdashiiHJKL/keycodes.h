@@ -19,9 +19,8 @@
 enum crkbd_layers {
   _QWERTY,
   _NAVIGATION,
-  _MINECRAFT,
+  _GAMING,
   _NUMBER,
-  _FUNCTION,
   _ADJUST
 };
 
@@ -38,15 +37,21 @@ enum crkbd_layers {
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
+// Nav home row mods KC_LPRN,S(KC_COMM),KC_LCBR,KC_LBRC,
+#define NAV_PRN LGUI_T(KC_LPRN)
+#define NAV_ABK LALT_T(KC_LABK)
+#define NAV_CBR LSFT_T(KC_LCBR)
+#define NAV_BRC LCTL_T(KC_LBRC)
+
 // Left-hand thumb keys
-#define TDELFUN LT(_FUNCTION, KC_DEL) // Put function keys on left hand
-#define TTABNAV LT(_NAVIGATION, KC_TAB) // Use the tab, nothing else
-#define TENTNUM LT(_NUMBER, KC_ENT) // Good
+#define TDELNUM LT(_NUMBER, KC_DEL)
+#define TTABNAV LT(_NAVIGATION, KC_TAB)
+#define TENTCTL LCTL_T(KC_ENT)
 
 // Right-hand thumb keys
-// TENTNUM repeated on RH
-#define TSPCNAV LT(_NAVIGATION, KC_SPC) // Good
-#define TBKSFUN LT(_FUNCTION, KC_BSPC) // Kept function keys on right hand
+#define TESCCTL LCTL_T(KC_ESC)
+#define TSPCNAV LT(_NAVIGATION, KC_SPC)
+#define TBKSNUM LT(_NUMBER, KC_BSPC)
 
 // Special layer navigation keys
 #define SQWERTY DF(_QWERTY) // sets qwerty as base layer
@@ -54,9 +59,7 @@ enum crkbd_layers {
 #define LNAV    TO(_NAVIGATION)
 #define LADJUST TO(_ADJUST)
 #define LNUM    TO(_NUMBER)
-#define LFUN    TO(_FUNCTION)
-#define LMINECR TO(_MINECRAFT)
-#define LTHUMBX LT(_NAVIGATION, KC_X)
+#define LGAMING TO(_GAMING)
 #define LTHUMBE LT(_NAVIGATION, KC_E)
 
 // Misc combined keys
