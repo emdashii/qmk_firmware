@@ -58,7 +58,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(13, RGB_PINK);             // To Nav
             rgb_matrix_set_color(6, RGB_GOLDENROD);          // To Nav keys
             rgb_matrix_set_color(33, RGB_GOLDENROD);          // To Nav keys
-            rgb_matrix_set_color(18, RGB_GOLDENROD);          // To Function keys
+            rgb_matrix_set_color(17, RGB_GOLDENROD);          // To Function keys
             break;
         case _NAVIGATION:
             for (uint8_t i = 0; i < 4; i++) {
