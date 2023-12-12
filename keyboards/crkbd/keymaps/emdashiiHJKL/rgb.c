@@ -99,7 +99,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(6, RGB_CORAL);            // To qwerty
             rgb_matrix_set_color(33, RGB_SPRINGGREEN);      // To gaming
             //rgb_matrix_set_color(41, RGB_SPRINGGREEN);      // To gaming
-            rgb_matrix_set_color(23, RGB_PINK);             // To navigation
+            rgb_matrix_set_color(18, RGB_PINK);             // To navigation
             break;
     }
     return false;
