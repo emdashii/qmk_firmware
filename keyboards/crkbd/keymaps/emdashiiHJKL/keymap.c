@@ -34,19 +34,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // QWERTY
 //  ,--------------------------------------------.                    ,--------------------------------------------.
-//  |   Q    |   W    |  E/nav |   R    |   T    |                    |   Y    |   U    |   I    |   O    |   P    |
+//  |   Q    |   W    |  E/adj |   R    |   T    |                    |   Y    |   U    |   I    |   O    |   P    |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |  A/GUI | S/ALT  | D/SHIFT| F/CTRL |   G    |                    |   H    | J/CTRL | K/SHIFT| L/ALT  | ;/GUI  |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |   Z    |   X    |   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             | Del/num| Tab/nav|Ent/Ctrl|  |ESC/Ctrl| Spc/nav|Bksp/num|
+//                             | Del/num| Tab/nav| Ent/num|  | ESC/num| Spc/nav|Bksp/num|
 //                             `--------------------------'  `--------------------------'
   [_QWERTY] = LAYOUT_split_3x6_3(
       XXXXXXX,    KC_Q,    KC_W, LTHUMBE,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  XXXXXXX,
       XXXXXXX,  HOME_A,  HOME_S,  HOME_D,  HOME_F,    KC_G,                         KC_H,  HOME_J,  HOME_K,  HOME_L,HOME_SCLN, XXXXXXX,
       XXXXXXX,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  XXXXXXX,
-                                           TDELNUM, TTABNAV, TENTCTL,       TESCCTL, TSPCNAV,  TBKSNUM
+                                           TDELNUM, TTABNAV, TENTNUM,       TESCNUM, TSPCNAV,  TBKSNUM
 
   ),
 
@@ -54,17 +54,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  ,--------------------------------------------.                    ,--------------------------------------------.
 //  |    !   |   @    |   #    |    $   |   %    |                    |   ^    |   &    |   *    |   _    |   ~    |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//  |  GUI   |  ALT   | [/SHIFT| ]/CTRL |   \    |                    |  Left  |  Down  |   Up   | Right  | Insert |
+//  |  GUI   |  ALT   | [/SHIFT| ]/CTRL |   \    |                    |  Left  |  Down  |   Up   | Right  | QWERTY |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//  |   (    |   )    |   {    |   }    |   |    |                    | Pg Up  |  Home  |  End   | Pg Dn  | Escape |
+//  |   (    |   )    |   {    |   }    |   |    |                    |  Home  | Pg Dn  | Pg Up  |  End   |        |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |  Bksp  |  Space | QWERTY |  |Ent/Ctrl|  Tab   |  Del   |
+//                             | Del/num|Tab/Qwer| Ent/num|  | Esc/num|Spc/Qwer|Bksp/num|
 //                             `--------------------------'  `--------------------------'
   [_NAVIGATION] = LAYOUT_split_3x6_3(
      XXXXXXX, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                     KC_CIRC, KC_AMPR, KC_ASTR, KC_UNDS, KC_TILD, XXXXXXX,
-     XXXXXXX, KC_LGUI, KC_LALT, NAV_RBR, NAV_LBR, KC_BSLS,                     KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_INS, XXXXXXX,
-     XXXXXXX, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_PIPE,                     KC_PGUP, KC_HOME,  KC_END, KC_PGDN,  KC_ESC, XXXXXXX,
-                                         KC_BSPC, KC_SPC, LQWERTY,       TENTCTL, KC_TAB, KC_DEL
+     XXXXXXX, KC_LGUI, KC_LALT, NAV_RBR, NAV_LBR, KC_BSLS,                     KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, LQWERTY, XXXXXXX,
+     XXXXXXX, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_PIPE,                     KC_HOME, KC_PGDN, KC_PGUP,  KC_END, XXXXXXX, XXXXXXX,
+                                         TDELNUM, TTABQTY, TENTNUM,       TESCNUM, TSPCQTY, TBKSNUM
 
   ),
 
@@ -106,19 +106,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // Adjust
 //  ,--------------------------------------------.                    ,--------------------------------------------.
-//  |  Reset |        |        |        |PrintScr|                    | NumLock|CapsLock|ScrollLock|Bright+| Vol+  |
+//  |  Reset | TO NAV |        | Insert |PrintScr|                    | NumLock|CapsLock|ScrollLock|Bright+| Vol+  |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  | On/Off | Hue ↑  | Sat ↑  | Brght ↑|        |                    |        |        |        | Bright-|  Vol-  |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  | Cycle  | Hue ↓  | Sat ↓  | Brght ↓|        |                    |SetQWERTY|       |        |        |  Mute  |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |        |        | QWERTY |  | Gaming |        |        |
+//                             |        |  Space | QWERTY |  | Gaming |        |        |
 //                             `--------------------------'  `--------------------------'
   [_ADJUST] = LAYOUT_split_3x6_3(
-      XXXXXXX,  QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,                       KC_NUM, KC_CAPS, KC_SCRL, KC_BRIU, KC_VOLU, XXXXXXX,
+      XXXXXXX,  QK_BOOT,   LNAV, XXXXXXX, KC_INS, KC_PSCR,                       KC_NUM, KC_CAPS, KC_SCRL, KC_BRIU, KC_VOLU, XXXXXXX,
       XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_VOLD, XXXXXXX,
       XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      SQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE, XXXXXXX,
-                                          XXXXXXX, XXXXXXX, LQWERTY,      LGAMING, XXXXXXX, XXXXXXX
+                                          XXXXXXX,  KC_SPC, LQWERTY,      LGAMING, XXXXXXX, XXXXXXX
   )
 };
 
