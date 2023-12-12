@@ -56,8 +56,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(41, RGB_GOLDENROD);        // To Numbers
             rgb_matrix_set_color(40, RGB_PINK);             // To Nav
             rgb_matrix_set_color(13, RGB_PINK);             // To Nav
-            //rgb_matrix_set_color(14, RGB_MAGENTA);          // To Function keys
-            //rgb_matrix_set_color(41, RGB_MAGENTA);          // To Function keys
+            rgb_matrix_set_color(6, RGB_GOLDENROD);          // To Nav keys
+            rgb_matrix_set_color(33, RGB_GOLDENROD);          // To Nav keys
+            rgb_matrix_set_color(18, RGB_GOLDENROD);          // To Function keys
             break;
         case _NAVIGATION:
             for (uint8_t i = 0; i < 4; i++) {
@@ -98,7 +99,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(6, RGB_CORAL);            // To qwerty
             rgb_matrix_set_color(33, RGB_SPRINGGREEN);      // To gaming
             //rgb_matrix_set_color(41, RGB_SPRINGGREEN);      // To gaming
-            //rgb_matrix_set_color(40, RGB_PINK);             // To navigation
+            rgb_matrix_set_color(23, RGB_PINK);             // To navigation
             break;
     }
     return false;

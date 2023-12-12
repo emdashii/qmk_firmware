@@ -46,12 +46,16 @@ enum crkbd_layers {
 // Left-hand thumb keys
 #define TDELNUM LT(_NUMBER, KC_DEL)
 #define TTABNAV LT(_NAVIGATION, KC_TAB)
-#define TENTCTL LCTL_T(KC_ENT)
+//#define TENTCTL LCTL_T(KC_ENT)
+#define TENTNUM LT(_NUMBER, KC_ENT)
+#define TTABQTY LT(_QWERTY, KC_TAB)
 
 // Right-hand thumb keys
-#define TESCCTL LCTL_T(KC_ESC)
+#define TESCNUM LT(_NUMBER, KC_ESC)
+//#define TESCCTL LCTL_T(KC_ESC)
 #define TSPCNAV LT(_NAVIGATION, KC_SPC)
 #define TBKSNUM LT(_NUMBER, KC_BSPC)
+#define TSPCQTY LT(_QWERTY, KC_SPC)
 
 // Special layer navigation keys
 #define SQWERTY DF(_QWERTY) // sets qwerty as base layer
@@ -60,7 +64,7 @@ enum crkbd_layers {
 #define LADJUST TO(_ADJUST)
 #define LNUM    TO(_NUMBER)
 #define LGAMING TO(_GAMING)
-#define LTHUMBE LT(_NAVIGATION, KC_E)
+#define LTHUMBE LT(_ADJUST, KC_E)
 
 // Misc combined keys
 #define CTRLSPC LCTL_T(KC_SPC)
