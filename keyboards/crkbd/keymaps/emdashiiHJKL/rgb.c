@@ -64,7 +64,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             for (uint8_t i = 0; i < 4; i++) {
                 rgb_matrix_set_color(nav_leds[i], RGB_PINK);
             }
-            rgb_matrix_set_color(48, RGB_RED);              // Escape key
+            //rgb_matrix_set_color(48, RGB_RED);              // Escape key
             break;
         case _GAMING:
             if (is_keyboard_master()) {
