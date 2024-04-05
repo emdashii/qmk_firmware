@@ -44,7 +44,7 @@ enum crkbd_layers {
 #define NAV_LBR LCTL_T(KC_RBRC)
 
 // Left-hand thumb keys
-#define TDELNUM LT(_NUMBER, KC_DEL)
+#define TDELADJ LT(_ADJUST, KC_DEL)
 #define TTABNAV LT(_NAVIGATION, KC_TAB)
 //#define TENTCTL LCTL_T(KC_ENT)
 #define TENTNUM LT(_NUMBER, KC_ENT)

@@ -42,13 +42,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //ESC|  Z    |   X    |   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    |ENTER
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |  Del   |  NAV   |  TAB   |  | REPEAT | Spc/NUM|  Bksp  |
+//                             |Del/Adj |  NAV   |  TAB   |  | REPEAT | Spc/NUM|  Bksp  |
 //                             `--------------------------'  `--------------------------'
   [_QWERTY] = LAYOUT_split_3x6_3(
       XXXXXXX,    KC_Q,    KC_W, LTHUMBE,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  XXXXXXX,
       XXXXXXX,  HOME_A,  HOME_S,  HOME_D,  HOME_F,    KC_G,                         KC_H,  HOME_J,  HOME_K,  HOME_L,HOME_SCLN, XXXXXXX,
       KC_ESC,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
-                                           KC_DEL, MO(_NAVIGATION), KC_TAB,       QK_REPEAT_KEY, TSPCNUM,  KC_BSPC
+                                           TDELADJ, MO(_NAVIGATION), KC_TAB,       QK_REPEAT_KEY, TSPCNUM,  KC_BSPC
 
   ),
 
@@ -108,18 +108,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // Adjust
 //  ,--------------------------------------------.                    ,--------------------------------------------.
-//  |  Reset |        |        |        |        |                    | NumLock|        |ScrollLock|      | Vol+   |
+//Hue↑|Alt   | Home   |   Up   |  End   | Pg Up  |                    | NumLock|ScrollLock|Brght ↓|Brght ↑| Vol+   | Sat ↑
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//  | On/Off | Hue ↑  | Sat ↑  | Brght ↑|        |                    |PrevTrack|Bright-|Bright+|NextTrack|  Vol-  |
+//Hue↓| Shift|  Left  |  Down  | Right  | Pg Dn  |                    |PrevTrack|Bright-|Bright+|NextTrack|  Vol-  | Sat ↓
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//  | Cycle  | Hue ↓  | Sat ↓  | Brght ↓|        |                    |SetQWERTY|       |        |Play/Pause| Mute |
+//CTRL| Meta | Hue ↓  | Sat ↓  | Brght ↓|        |                    |SetQWERTY| On/Off| Cycle  |Play/Pause| Mute |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |        |        | QWERTY |  | Gaming |        |        |
+//                             |        | Reset  | QWERTY |  | Gaming |        |        |
 //                             `--------------------------'  `--------------------------'
   [_ADJUST] = LAYOUT_split_3x6_3(
-      XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_NUM, XXXXXXX, KC_SCRL, XXXXXXX, KC_VOLU, XXXXXXX,
-      XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX,                      KC_MPRV, KC_BRID, KC_BRIU, KC_MNXT, KC_VOLD, XXXXXXX,
-      XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      SQWERTY, XXXXXXX, XXXXXXX, KC_MPLY, KC_MUTE, XXXXXXX,
+      RGB_HUI, KC_LALT, KC_HOME,   KC_UP,  KC_END, KC_PGUP,                       KC_NUM, KC_SCRL, RGB_VAD, RGB_VAI, KC_VOLU, RGB_SAI,
+      RGB_HUD, KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,              KC_MPRV, KC_BRID, KC_BRIU, KC_MNXT, KC_VOLD, RGB_SAD,
+      KC_LCTL, KC_LGUI, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,                      SQWERTY, RGB_TOG, RGB_MOD, KC_MPLY, KC_MUTE, XXXXXXX,
                                           XXXXXXX, XXXXXXX, LQWERTY,      LGAMING, XXXXXXX, XXXXXXX
   )
 };
