@@ -24,11 +24,12 @@ static const char qwerty_leds[] = {22, 19, 16, 11, 38, 43, 46, 49};     // 8
 static const char gaming_leds[] = {17, 11, 19, 16, 13};                 // 5
 //static const char sym_leds[] = {22,19,16,11,21,20,15,12};               // 8
 static const char nav_leds[] = {35, 38, 43, 46};                        // 4
+static const char nav_leds2[] = {19, 17, 16, 11};                        // 4
 static const char num_leds[] = {45, 44, 37, 46, 43, 38, 47, 42, 39, 40}; // 10
 //static const char fun_leds[] = {45, 44, 37, 46, 43, 38, 47, 42, 39, 50, 49, 48}; // 12
 static const char fun_leds[] = {7, 8, 9, 18, 19, 20, 17, 16, 15, 10, 11, 12};    // 12
-static const char adjust_leds[] = {22, 19, 16, 21, 20, 15, 11, 12};     // 8
-static const char adjust_other_leds[] = {36, 37, 44, 50, 49, 9};        // 6
+static const char adjust_leds[] = {26, 21, 22, 23, 18, 10, 9, 8};     // 8
+static const char adjust_other_leds[] = {35, 36, 37, 46, 47, 48, 49, 50};        // 8
 //static const char mouse_leds[] = {17, 19, 16, 11, 7, 8, 9, 34, 35, 36}; // 10
 
 
@@ -85,12 +86,15 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(6, RGB_SPRINGGREEN);      // To gaming
             break;
         case _ADJUST:
-            rgb_matrix_set_color(23, RGB_GREEN);            // Reset key
+            rgb_matrix_set_color(7, RGB_GREEN);            // Reset key
             for (uint8_t i = 0; i < 8; i++) {
                 rgb_matrix_set_color(adjust_leds[i], RGB_RED);
             }
-            for (uint8_t i = 0; i < 6; i++) {
+            for (uint8_t i = 0; i < 8; i++) {
                 rgb_matrix_set_color(adjust_other_leds[i], RGB_RED);
+            }
+            for (uint8_t i = 0; i < 4; i++) {
+                rgb_matrix_set_color(nav_leds2[i], RGB_PINK);
             }
             rgb_matrix_set_color(6, RGB_CORAL);            // To qwerty
             rgb_matrix_set_color(33, RGB_SPRINGGREEN);      // To gaming
@@ -98,6 +102,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     }
     return false;
 }
+
 
 // CRKBD LED TEMPLATE (learned through much thought (and trial and error))
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
