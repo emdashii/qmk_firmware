@@ -40,15 +40,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |  A/GUI | S/ALT  | D/SHIFT| F/CTRL |   G    |                    |   H    | J/CTRL | K/SHIFT| L/ALT  | ;/GUI  |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//ESC|  Z    |   X    |   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    |ENTER
+//ESC|  Z    |   X    |   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    |CAPS WORD
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |Del/Adj |  NAV   |  TAB   |  | REPEAT | Spc/NUM|  Bksp  |
+//                             |Del/Adj |  TAB   |  ENT   |  | REPEAT | Spc/NUM|  Bksp  |
 //                             `--------------------------'  `--------------------------'
   [_QWERTY] = LAYOUT_split_3x6_3(
       XXXXXXX,    KC_Q,    KC_W, LTHUMBE,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  XXXXXXX,
       XXXXXXX,  HOME_A,  HOME_S,  HOME_D,  HOME_F,    KC_G,                         KC_H,  HOME_J,  HOME_K,  HOME_L,HOME_SCLN, XXXXXXX,
-      KC_ESC,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
-                                           TDELADJ, MO(_NAVIGATION), KC_TAB,       QK_REPEAT_KEY, TSPCNUM,  KC_BSPC
+      TESCNUM,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  CW_TOGG,
+                                           TDELADJ, TTABNUM, KC_ENT,       QK_REPEAT_KEY, TSPCNAV,  KC_BSPC
 
   ),
 
@@ -94,15 +94,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //  |  CAPS  |   F4   |   F5   |   F6   |  F11   |                    |   =    |   4    |   5    |   6    |   -    |
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//ESC|PrintScr|  F1   |   F2   |   F3   |  F12   |                    |   :    |   1    |   2    |   3    |   /    | 0
+//  |PrintScr|   F1   |   F2   |   F3   |  F12   |                    |   :    |   1    |   2    |   3    |   /    | 0
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
-//                             |   DEL  | ADJUST |ToGaming|  |        |        |  BKSP  |
+//                             |   DEL  | ADJUST |ToGaming|  |   .    |   0    |  BKSP  |
 //                             `--------------------------'  `--------------------------'
   [_NUMBER] = LAYOUT_split_3x6_3(
       XXXXXXX,    KC_INS,  KC_F7,   KC_F8,   KC_F9,  KC_F10,                    S(KC_8),    KC_7,    KC_8,    KC_9, KC_PPLS, XXXXXXX,
       XXXXXXX,   KC_CAPS,  KC_F4,   KC_F5,   KC_F6,  KC_F11,                     KC_EQL,    KC_4,    KC_5,    KC_6, KC_MINS, XXXXXXX,
       KC_TRNS,   KC_PSCR,  KC_F1,   KC_F2,   KC_F3,  KC_F12,                      COLON,    KC_1,    KC_2,    KC_3, KC_SLSH, KC_0,
-                                           KC_DEL, MO(_ADJUST), LGAMING,       XXXXXXX,   KC_TRNS,  KC_BSPC
+                                           KC_DEL, MO(_ADJUST), LGAMING,          KC_DOT,   KC_0,  KC_BSPC
 
   ),
 
@@ -112,14 +112,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
 //Hue↓| Shift|  Left  |  Down  | Right  | Pg Dn  |                    |PrevTrack|Bright-|Bright+|NextTrack|  Vol-  | Sat ↓
 //  |--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-//CTRL| Meta |        |        |        |  RESET |                    |SetQWERTY| On/Off| Cycle  |Play/Pause| Mute |
+//CTRL| Meta |  App   |   Ins  |        |  RESET |                    |SetQWERTY| On/Off| Cycle  |Play/Pause| Mute |
 //  `--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------'
 //                             |        | Reset  | QWERTY |  | Gaming |        |        |
 //                             `--------------------------'  `--------------------------'
   [_ADJUST] = LAYOUT_split_3x6_3(
       RGB_HUI, KC_LALT, KC_HOME,   KC_UP,  KC_END, KC_PGUP,                       KC_NUM, KC_SCRL, RGB_VAD, RGB_VAI, KC_VOLU, RGB_SAI,
       RGB_HUD, KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,              KC_MPRV, KC_BRID, KC_BRIU, KC_MNXT, KC_VOLD, RGB_SAD,
-      KC_LCTL, KC_LGUI, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,                      SQWERTY, RGB_TOG, RGB_MOD, KC_MPLY, KC_MUTE, XXXXXXX,
+      KC_LCTL, KC_LGUI,  KC_APP, KC_INS, XXXXXXX, QK_BOOT,                      SQWERTY, RGB_TOG, RGB_MOD, KC_MPLY, KC_MUTE, XXXXXXX,
                                           XXXXXXX, XXXXXXX, LQWERTY,      LGAMING, XXXXXXX, XXXXXXX
   )
 };
