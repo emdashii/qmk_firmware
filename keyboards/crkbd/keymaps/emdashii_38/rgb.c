@@ -54,8 +54,8 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             for (uint8_t i = 0; i < 8; i++) {
                 rgb_matrix_set_color(qwerty_leds[i], RGB_CORAL);
             }
-            rgb_matrix_set_color(40, RGB_GOLDENROD);             // To Numbers
-            rgb_matrix_set_color(13, RGB_PINK);             // To Nav
+            rgb_matrix_set_color(13, RGB_GOLDENROD);             // To Numbers
+            rgb_matrix_set_color(40, RGB_PINK);             // To Nav
             rgb_matrix_set_color(17, RGB_GOLDENROD);          // To Function keys
             break;
         case _NAVIGATION:
