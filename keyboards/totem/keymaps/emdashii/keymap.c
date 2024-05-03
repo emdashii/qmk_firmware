@@ -49,7 +49,9 @@ enum custom_keycodes {
     ADJUST,
     OS_SWAP,
     MAKE_H,
-    SNAP
+    SNAP,
+    SURROUND,
+    LOREMIPSUM
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -57,69 +59,35 @@ enum custom_keycodes {
 // └─────────────────────────────────────────────────┘
 
 // LEFT HAND HOME ROW MODS QWERTY ├──────────────────┐
-
-#define GUI_A MT(MOD_LGUI, KC_A)
-#define ALT_S MT(MOD_LALT, KC_S)
-#define CTL_D MT(MOD_LCTL, KC_D)
-#define SHT_F MT(MOD_LSFT, KC_F)
-
-// RIGHT HAND HOME ROW MODS QWERTY ├─────────────────┐
-
-#define SHT_J MT(MOD_RSFT, KC_J)
-#define CTL_K MT(MOD_LCTL, KC_K)
-#define ALT_L MT(MOD_LALT, KC_L)
-#define GUI_S MT(MOD_LGUI, KC_SCLN)
-
-
-
-// Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
 #define HOME_S LALT_T(KC_S)
 #define HOME_D LSFT_T(KC_D)
 #define HOME_F LCTL_T(KC_F)
 
-// Right-hand home row mods
+// RIGHT HAND HOME ROW MODS QWERTY ├─────────────────┐
 #define HOME_J RCTL_T(KC_J)
 #define HOME_K RSFT_T(KC_K)
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
-// Nav home row mods KC_LPRN,S(KC_COMM),KC_LCBR,KC_LBRC,
-//#define NAV_PRN LGUI_T(KC_LPRN)
-//#define NAV_ABK LALT_T(KC_LABK)
+// Misc combined keys
+#define COLON S(KC_SCLN)
 #define NAV_RBR LSFT_T(KC_LBRC)
 #define NAV_LBR LCTL_T(KC_RBRC)
 
 // Left-hand thumb keys
 #define TDELADJ LT(_ADJUST, KC_DEL)
 #define TTABNAV LT(_NAVIGATION, KC_TAB)
-#define TTABNUM LT(_NUMBER, KC_TAB)
-//#define TENTCTL LCTL_T(KC_ENT)
-#define TENTNUM LT(_NUMBER, KC_ENT)
-#define TTABQTY LT(_QWERTY, KC_TAB)
 
 // Right-hand thumb keys
 #define TESCNUM LT(_NUMBER, KC_ESC)
-//#define TESCCTL LCTL_T(KC_ESC)
-#define TSPCNUM LT(_NUMBER, KC_SPC)
 #define TSPCNAV LT(_NAVIGATION, KC_SPC)
-#define TSPCQTY LT(_QWERTY, KC_SPC)
 
 // Special layer navigation keys
 #define SQWERTY DF(_QWERTY) // sets qwerty as base layer
 #define LQWERTY TO(_QWERTY)
-#define LNAV    TO(_NAVIGATION)
-#define LADJUST TO(_ADJUST)
 #define LNUM    TO(_NUMBER)
 #define LGAMING TO(_GAMING)
-#define LTHUMBE LT(_ADJUST, KC_E)
-
-// Misc combined keys
-#define CTRLSPC LCTL_T(KC_SPC)
-#define CTRLSFT C(KC_LSFT)
-#define COLON S(KC_SCLN)
-#define TABLGUI LGUI_T(KC_TAB)
-#define LCAPSFT LSFT_T(KC_CAPS)
 
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -272,6 +240,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
+// ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+// │ C O M B O S                                                                                                            │
+// └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+// ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+
+const uint16_t PROGMEM combo_esc[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM combo_equal[] = {KC_H, HOME_J, COMBO_END};
+const uint16_t PROGMEM combo_minus[] = {HOME_L, HOME_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_backspace[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_surround[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_loremipsum[] = {KC_T, KC_Y, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(combo_esc, KC_ESC),
+    COMBO(combo_equal, KC_EQUAL),
+    COMBO(combo_minus, KC_MINS),
+    COMBO(combo_backspace, LCTL(KC_BACKSPACE)),
+    COMBO(combo_surround, SURROUND),
+    COMBO(combo_loremipsum, LOREMIPSUM),
+};
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ M A C R O S                                                                                                            │
@@ -295,6 +283,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
           }
 
+// ┌─────────────────────────────────────────────────┐
+// │ s u r r o u n d                                 │
+// └─────────────────────────────────────────────────┘
+
+        case SURROUND:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_LEFT) SS_UP(X_LCTL) SS_DELAY(30));
+                SEND_STRING(SS_LSFT("'"));
+                SEND_STRING(SS_DELAY(30) SS_DOWN(X_LCTL) SS_TAP(X_RIGHT) SS_UP(X_LCTL) SS_DELAY(30));
+                tap_code(KC_LEFT);
+                SEND_STRING(SS_DELAY(30) SS_LSFT("'"));
+            }
+            break;
+
+// ┌─────────────────────────────────────────────────┐
+// │ l o r e m   i p s u m                           │
+// └─────────────────────────────────────────────────┘
+
+        case LOREMIPSUM:
+            if (record->event.pressed) {
+                SEND_STRING("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " SS_DELAY(50));
+                SEND_STRING("Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " SS_DELAY(50));
+                SEND_STRING("Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " SS_DELAY(50));
+                SEND_STRING("Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+            }
+            break;
 
 // ┌─────────────────────────────────────────────────┐
 // │ q m k                                           │
@@ -302,7 +316,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case MAKE_H:
           if (record->event.pressed) {
-            SEND_STRING ("qmk compile -kb totem -km default");
+            SEND_STRING("qmk compile -kb totem -km default");
             tap_code(KC_ENTER);
           }
           break;
