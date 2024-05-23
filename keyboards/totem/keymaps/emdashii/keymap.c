@@ -88,7 +88,7 @@ enum custom_keycodes {
 #define LQWERTY TO(_QWERTY)
 #define LNUM    TO(_NUMBER)
 #define LGAMING TO(_GAMING)
-#define NUM_TOG LT(_NUMBER, CW_TOGG)
+// #define NUM_TOG LT(_NUMBER, CW_TOGG) this doesn't work
 
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
                 KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
               HOME_A,  HOME_S,  HOME_D,  HOME_F,    KC_G,                         KC_H,  HOME_J,  HOME_K,  HOME_L,HOME_SCLN,
-    TESCNUM,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  NUM_TOG,
+    TESCNUM,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  CW_TOGG,
                                            TDELADJ, TTABNAV, KC_ENT,       QK_REPEAT_KEY, TSPCNAV,  KC_BSPC
  ),
 
