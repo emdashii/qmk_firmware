@@ -175,9 +175,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ n u m b e r / f u n c t i o n                   │      ╭╮╭╮╭╮╭╮
    └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
              ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
-     ╌┄┈┈───═╡   INS   │   F7    │   F8    │   F9    │   F12   ││    *    │    7    │    8    │    9    │    +    │
+     ╌┄┈┈───═╡   INS   │   F7    │   F8    │   F9    │   F12   ││    *    │    7    │    8    │    9    │    0    │
              ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
-             │ CAPSLOCK│   F4    │   F5    │   F6    │   F11   ││    =    │    4    │    5    │    6    │    -    │
+             │ CAPSLOCK│   F4    │   F5    │   F6    │   F11   ││    =    │    4    │    5    │    6    │    .    │
    ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
    │         │ PRINTSCR│   F1    │   F2    │   F3    │   F10   ││    :    │    1    │    2    │    3    │    /    │         │
    └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
@@ -186,8 +186,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_NUMBER] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-                  KC_INS,  KC_F7,   KC_F8,   KC_F9,  KC_F10,                    S(KC_8),    KC_7,    KC_8,    KC_9, KC_PPLS,
-                 KC_CAPS,  KC_F4,   KC_F5,   KC_F6,  KC_F11,                     KC_EQL,    KC_4,    KC_5,    KC_6, KC_MINS,
+                  KC_INS,  KC_F7,   KC_F8,   KC_F9,  KC_F10,                    S(KC_8),    KC_7,    KC_8,    KC_9, KC_0,
+                 KC_CAPS,  KC_F4,   KC_F5,   KC_F6,  KC_F11,                     KC_EQL,    KC_4,    KC_5,    KC_6, KC_DOT,
       KC_TRNS,   KC_PSCR,  KC_F1,   KC_F2,   KC_F3,  KC_F12,                      COLON,    KC_1,    KC_2,    KC_3, KC_SLSH, KC_TRNS,
                                            KC_DEL, MO(_ADJUST), LGAMING,          KC_DOT,   KC_0,  KC_BSPC
  ),
@@ -251,9 +251,16 @@ const uint16_t PROGMEM combo_equal[] = {HOME_J, HOME_K, COMBO_END};
 const uint16_t PROGMEM combo_plus[] = {HOME_K, HOME_L, COMBO_END};
 const uint16_t PROGMEM combo_minus[] = {HOME_L, HOME_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_tilde[] = {HOME_J, HOME_L, COMBO_END};
+const uint16_t PROGMEM combo_backspace3[] = {HOME_K, HOME_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_backspace[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_surround[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_loremipsum[] = {KC_T, KC_Y, COMBO_END};
+
+const uint16_t PROGMEM combo_equal2[] = {KC_4, KC_5, COMBO_END};
+const uint16_t PROGMEM combo_plus2[] = {KC_5, KC_6, COMBO_END};
+const uint16_t PROGMEM combo_minus2[] = {KC_6, KC_DOT, COMBO_END};
+const uint16_t PROGMEM combo_tilde2[] = {KC_4, KC_6, COMBO_END};
+const uint16_t PROGMEM combo_backspace2[] = {KC_5, KC_DOT, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(combo_esc, KC_ESC),
@@ -261,9 +268,16 @@ combo_t key_combos[] = {
     COMBO(combo_plus, KC_PPLS),
     COMBO(combo_minus, KC_MINS),
     COMBO(combo_tilde, LSFT(KC_GRV)),
+    COMBO(combo_backspace3, LCTL(KC_BACKSPACE)),
     COMBO(combo_backspace, LCTL(KC_BACKSPACE)),
     COMBO(combo_surround, SURROUND),
     COMBO(combo_loremipsum, LOREMIPSUM),
+    COMBO(combo_esc, KC_ESC),
+    COMBO(combo_equal2, KC_EQUAL),
+    COMBO(combo_plus2, KC_PPLS),
+    COMBO(combo_minus2, KC_MINS),
+    COMBO(combo_tilde2, LSFT(KC_GRV)),
+    COMBO(combo_backspace2, LCTL(KC_BACKSPACE)),
 };
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -297,7 +311,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_LEFT) SS_UP(X_LCTL) SS_DELAY(30));
                 SEND_STRING(SS_LSFT("'"));
                 SEND_STRING(SS_DELAY(30) SS_DOWN(X_LCTL) SS_TAP(X_RIGHT) SS_UP(X_LCTL) SS_DELAY(30));
-                tap_code(KC_LEFT);
+                // tap_code(KC_LEFT);
                 SEND_STRING(SS_DELAY(30) SS_LSFT("'"));
             }
             break;
