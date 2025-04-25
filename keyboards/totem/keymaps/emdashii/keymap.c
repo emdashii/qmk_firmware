@@ -51,7 +51,9 @@ enum custom_keycodes {
     MAKE_H,
     SNAP,
     SURROUND,
-    LOREMIPSUM
+    LOREMIPSUM,
+    DELEND,
+    COPY_LINE
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -251,7 +253,8 @@ const uint16_t PROGMEM combo_equal[] = {HOME_J, HOME_K, COMBO_END};
 const uint16_t PROGMEM combo_plus[] = {HOME_K, HOME_L, COMBO_END};
 const uint16_t PROGMEM combo_minus[] = {HOME_L, HOME_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_tilde[] = {HOME_J, HOME_L, COMBO_END};
-const uint16_t PROGMEM combo_backspace3[] = {HOME_K, HOME_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_delend[] = {HOME_K, HOME_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_copy_line[] = {HOME_J, HOME_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_backspace[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_surround[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_loremipsum[] = {KC_T, KC_Y, COMBO_END};
@@ -268,7 +271,8 @@ combo_t key_combos[] = {
     COMBO(combo_plus, KC_PPLS),
     COMBO(combo_minus, KC_MINS),
     COMBO(combo_tilde, LSFT(KC_GRV)),
-    COMBO(combo_backspace3, LCTL(KC_BACKSPACE)),
+    COMBO(combo_delend, DELEND),
+    COMBO(combo_copy_line, COPY_LINE),
     COMBO(combo_backspace, LCTL(KC_BACKSPACE)),
     COMBO(combo_surround, SURROUND),
     COMBO(combo_loremipsum, LOREMIPSUM),
@@ -308,11 +312,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case SURROUND:
             if (record->event.pressed) {
-                SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_LEFT) SS_UP(X_LCTL) SS_DELAY(30));
+                // SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_LEFT) SS_UP(X_LCTL) SS_DELAY(30));
+                // SEND_STRING(SS_LSFT("'"));
+                // SEND_STRING(SS_DELAY(30) SS_DOWN(X_LCTL) SS_TAP(X_RIGHT) SS_UP(X_LCTL) SS_DELAY(30));
+                // // tap_code(KC_LEFT);
+                // SEND_STRING(SS_DELAY(30) SS_LSFT("'"));
+                // First, select the entire word no matter where the cursor is
+                SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_RIGHT) SS_TAP(X_LEFT) SS_UP(X_LCTL) SS_DELAY(30));
+                
+                // Now add opening quote
                 SEND_STRING(SS_LSFT("'"));
+                
+                // Move to end of word
                 SEND_STRING(SS_DELAY(30) SS_DOWN(X_LCTL) SS_TAP(X_RIGHT) SS_UP(X_LCTL) SS_DELAY(30));
-                // tap_code(KC_LEFT);
+                
+                // Add closing quote
                 SEND_STRING(SS_DELAY(30) SS_LSFT("'"));
+            }
+            break;
+
+// ┌─────────────────────────────────────────────────┐
+// │ d e l e n d                                     │
+// └─────────────────────────────────────────────────┘
+
+        case DELEND:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LSFT(SS_TAP(X_END)) SS_TAP(X_DELETE));
             }
             break;
 
@@ -326,6 +351,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING("Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " SS_DELAY(50));
                 SEND_STRING("Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " SS_DELAY(50));
                 SEND_STRING("Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+            }
+            break;
+
+// ┌─────────────────────────────────────────────────┐
+// │ c o p y    l i n e                              │
+// └─────────────────────────────────────────────────┘
+
+        case COPY_LINE:
+            if (record->event.pressed) {
+                // Go to beginning of line
+                SEND_STRING(SS_TAP(X_HOME));
+                
+                // Select the entire line
+                SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_END) SS_UP(X_LSFT));
+                
+                // Copy it
+                SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_C) SS_UP(X_LCTL));
+                
+                // Optional: release selection by tapping left then right
+                // SEND_STRING(SS_TAP(X_LEFT) SS_TAP(X_RIGHT));
             }
             break;
 
