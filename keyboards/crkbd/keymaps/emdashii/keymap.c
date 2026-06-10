@@ -60,35 +60,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // Navigation + Symbol
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//  |   !    |   @    |   #    |   $    |   %    |   ^    |                    | Ms Lft | Ms Dn  | Ms Up  | Ms Rgt | LClick | Bksp   |
+//  |        |   !    |   @    |   #    |   $    |   %    |                    |   ^    |   &    |   *    |   (    |   )    | Bksp   |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |   (    |   )    |   [    |   ]    |   {    |   }    |                    |  Left  |  Down  |   Up   | Right  | RClick | Delete |
+//  |        |  WIN   |  ALT   | SHIFT  |  CTRL  |   |    |                    |  Left  |  Down  |   Up   | Right  |        | Delete |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |   &    |   *    |   <    |   >    |   |    |   \    |                    | Wh Lft | Wh Dn  | Wh Up  | Wh Rgt | MClick | Escape |
+//  |        |   [    |   ]    |   {    |   }    |   \    |                    |  Home  | PgDn   | PgUp   |  End   |        | Escape |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
 //                                      | Adjust |  Nav   | Enter  |  | LLock  |  Space |        |
 //                                      `--------------------------'  `--------------------------'
   [_NAVIGATION] = LAYOUT_split_3x6_3(
-      KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC,                      MS_LEFT, MS_DOWN,   MS_UP, MS_RGHT, MS_BTN1, KC_BSPC,
-      KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, MS_BTN2,  KC_DEL,
-      KC_AMPR, KC_ASTR, KC_LABK, KC_RABK, KC_PIPE, KC_BSLS,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3,  KC_ESC,
+      XXXXXXX, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
+      XXXXXXX, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_PIPE,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX,  KC_DEL,
+      XXXXXXX, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_BSLS,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END, XXXXXXX,  KC_ESC,
                                          LADJUST, _______,  KC_ENT,     QK_LLCK,  KC_SPC, _______
   ),
 
 // Number (numpad mirrored on both hands)
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//  |   +    |   7    |   8    |   9    |   /    |   =    |                    |   +    |   7    |   8    |   9    |   /    | Bksp   |
+//  |   +    |   7    |   8    |   9    |   /    |        |                    |   +    |   7    |   8    |   9    |   /    | Bksp   |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |   -    |   4    |   5    |   6    |   *    |        |                    |   -    |   4    |   5    |   6    |   *    |   =    |
+//  |   -    |   4    |   5    |   6    |   0    |   =    |                    |   -    |   4    |   5    |   6    |   0    |   =    |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | MO Num |   1    |   2    |   3    |   .    |        |                    |   0    |   1    |   2    |   3    |   .    | Escape |
+//  | MO Num |   1    |   2    |   3    |   .    |   *    |                    |   *    |   1    |   2    |   3    |   .    | Escape |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
 //                                      | Adjust |  Nav   | Enter  |  | LLock  |  Space |        |
 //                                      `--------------------------'  `--------------------------'
   [_NUMBER] = LAYOUT_split_3x6_3(
-      KC_PLUS,    KC_7,    KC_8,    KC_9, KC_SLSH,  KC_EQL,                      KC_PLUS,    KC_7,    KC_8,    KC_9, KC_SLSH, KC_BSPC,
-      KC_MINS,    KC_4,    KC_5,    KC_6, KC_ASTR, XXXXXXX,                      KC_MINS,    KC_4,    KC_5,    KC_6, KC_ASTR,  KC_EQL,
-      _______,    KC_1,    KC_2,    KC_3,  KC_DOT, XXXXXXX,                         KC_0,    KC_1,    KC_2,    KC_3,  KC_DOT,  KC_ESC,
+      KC_PLUS,    KC_7,    KC_8,    KC_9, KC_SLSH, XXXXXXX,                      KC_PLUS,    KC_7,    KC_8,    KC_9, KC_SLSH, KC_BSPC,
+      KC_MINS,    KC_4,    KC_5,    KC_6,   KC_0,  KC_EQL,                       KC_MINS,    KC_4,    KC_5,    KC_6,   KC_0,   KC_EQL,
+      _______,    KC_1,    KC_2,    KC_3,  KC_DOT, KC_ASTR,                      KC_ASTR,    KC_1,    KC_2,    KC_3,  KC_DOT,  KC_ESC,
                                          LADJUST, _______,  KC_ENT,     QK_LLCK,  KC_SPC, _______
   ),
 
@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
 //  |        |   F1   |   F2   |   F3   |   F4   |   F5   |                    |   F6   |   F7   |   F8   |   F9   |   F10  |        |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |        |        |        |        |        |        |                    |  F11   |  Prev  |  Play  |  Next  | Vol +  |        |
+//  | CapsLk |        |        |        |        |        |                    |  F11   |  Prev  |  Play  |  Next  | Vol +  |        |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 //  |        |        |        |        |        |        |                    |  F12   |  Mute  |  Menu  |PrntScr | Vol -  |        |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
@@ -104,25 +104,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                      `--------------------------'  `--------------------------'
   [_FUNCTION] = LAYOUT_split_3x6_3(
       XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_F11, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU, XXXXXXX,
+      KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_F11, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU, XXXXXXX,
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_F12, KC_MUTE,  KC_APP, KC_PSCR, KC_VOLD, XXXXXXX,
                                          _______, _______, _______,     QK_LLCK, _______, _______
   ),
 
 // Adjust (toggle access from Nav / Number)
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//  |  Boot  | EE Clr |        |        |        |PrntScr |                    | NumLck | CapsLk | ScrlLk |        | Bright+|  Vol+  |
+//  |  Boot  | EE Clr |        |        |        |PrntScr |                    | NumLck |        | ScrlLk |        | Bright+|        |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | RGB Tg | Hue +  | Sat +  | Val +  | Spd +  |        |                    | QWERTY |        |        |        | Bright-|  Vol-  |
+//  | RGB Tg | Hue +  | Sat +  | Val +  | Spd +  |        |                    | QWERTY |        |        |        | Bright-|        |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | RGB Md | Hue -  | Sat -  | Val -  | Spd -  |        |                    | QWERTY |  Prev  |  Play  |  Next  |        |  Mute  |
+//  | RGB Md | Hue -  | Sat -  | Val -  | Spd -  |        |                    | QWERTY |        |        |        |        |        |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
 //                                      |        |        |        |  | LLock  |        |        |
 //                                      `--------------------------'  `--------------------------'
   [_ADJUST] = LAYOUT_split_3x6_3(
-      QK_BOOT,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,                       KC_NUM, KC_CAPS, KC_SCRL, XXXXXXX, KC_BRIU, KC_VOLU,
-      RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX,                      SQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_VOLD,
-      RM_NEXT, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX,                      LQWERTY, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, KC_MUTE,
+      QK_BOOT,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,                       KC_NUM, XXXXXXX, KC_SCRL, XXXXXXX, KC_BRIU, XXXXXXX,
+      RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX,                      SQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, XXXXXXX,
+      RM_NEXT, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX,                      LQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                          _______, _______, _______,     QK_LLCK, _______, _______
   )
 };

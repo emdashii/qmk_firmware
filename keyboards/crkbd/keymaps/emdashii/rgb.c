@@ -22,29 +22,31 @@
 // Base home-row keys: A S D F (L) / J K L ; (R).
 static const char home_leds[] = {22, 19, 16, 11, 38, 43, 46, 49};
 
-// Navigation + Symbol: mouse-move + arrows (right hand) and the full symbol
-// block (left hand).
+// Navigation + Symbol: number-row symbols across the top of both hands, mods +
+// brackets on the left, arrows + paging cluster on the right.
 static const char nav_leds[] = {
-    36, 37, 44, 45,          // right top row: mouse move
-    35, 38, 43, 46,          // right home row: arrows
-    24, 23, 18, 17, 10,  9,  // left top row: symbols
-    25, 22, 19, 16, 11,  8,  // left home row: brackets
-    26, 21, 20, 15, 12,  7   // left bottom row: more symbols
+    23, 18, 17, 10,  9,      // left top row: ! @ # $ %
+    22, 19, 16, 11,  8,      // left home row: WIN ALT SHIFT CTRL pipe
+    21, 20, 15, 12,  7,      // left bottom row: brackets and braces
+    36, 37, 44, 45, 50,      // right top row: ^ & * ( )
+    35, 38, 43, 46,          // right home row: arrows (HJKL)
+    34, 39, 42, 47           // right bottom row: Home / PgDn / PgUp / End
 };
 
 // Number: the mirrored numpad block on both hands.
 static const char num_leds[] = {
     24, 23, 18, 17, 10,      // left top row
-    25, 22, 19, 16, 11,      // left home row
-    26, 21, 20, 15, 12,      // left bottom row
+    25, 22, 19, 16, 11,  8,  // left home row (+ = on inner column)
+    26, 21, 20, 15, 12,  7,  // left bottom row (+ * on inner column)
     36, 37, 44, 45, 50,      // right top row
-    35, 38, 43, 46, 49,      // right home row
+    35, 38, 43, 46, 49, 52,  // right home row (+ = on inner column)
     34, 39, 42, 47, 48       // right bottom row
 };
 
-// Function: F1-F12 only.
+// Function: F1-F12, plus Caps Lock on the left home pinky.
 static const char fun_leds[] = {
     23, 18, 17, 10,  9,      // left top row: F1-F5
+    25,                      // left home pinky: Caps Lock
     36, 37, 44, 45, 50,      // right top row: F6-F10
     35,                      // right home pinky: F11
     34                       // right bottom pinky: F12
@@ -100,7 +102,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 rgb_matrix_set_color(adjust_leds[i], RGB_RED);
             }
             rgb_matrix_set_color(36, RGB_RED);          // Num Lock
-            rgb_matrix_set_color(37, RGB_RED);          // Caps Lock
             rgb_matrix_set_color(44, RGB_RED);          // Scroll Lock
             rgb_matrix_set_color(35, RGB_CORAL);        // DF(QWERTY)
             rgb_matrix_set_color(34, RGB_CORAL);        // TO(QWERTY)

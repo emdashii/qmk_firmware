@@ -1,4 +1,4 @@
-MOUSEKEY_ENABLE = yes    			# Mouse keys
+MOUSEKEY_ENABLE = no    			# Mouse keys (removed from the keymap; frees flash)
 RGBLIGHT_ENABLE = no    			# Enable WS2812 RGB underlight. Might need to be no?
 RGB_MATRIX_ENABLE = yes
 OLED_ENABLE     = yes
