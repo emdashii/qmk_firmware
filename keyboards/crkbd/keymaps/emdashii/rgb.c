@@ -22,25 +22,22 @@
 // Base home-row keys: A S D F (L) / J K L ; (R).
 static const char home_leds[] = {22, 19, 16, 11, 38, 43, 46, 49};
 
-// Navigation + Symbol: number-row symbols across the top of both hands, mods +
-// brackets on the left, arrows + paging cluster on the right.
+// Navigation: only the four arrow keys. Kept minimal because the per-key
+// indicators (rgb_matrix_set_color) bypass RGB_MATRIX_MAXIMUM_BRIGHTNESS, and
+// lighting many keys at full brightness browned out the TRRS-powered right half.
 static const char nav_leds[] = {
-    23, 18, 17, 10,  9,      // left top row: ! @ # $ %
-    22, 19, 16, 11,  8,      // left home row: WIN ALT SHIFT CTRL pipe
-    21, 20, 15, 12,  7,      // left bottom row: brackets and braces
-    36, 37, 44, 45, 50,      // right top row: ^ & * ( )
-    35, 38, 43, 46,          // right home row: arrows (HJKL)
-    34, 39, 42, 47           // right bottom row: Home / PgDn / PgUp / End
+    35, 38, 43, 46           // right home row: arrows (Left Down Up Right)
 };
 
 // Number: the mirrored numpad block on both hands.
+// Number: only the 0-9 digit keys on both hands (same current concern as nav).
 static const char num_leds[] = {
-    24, 23, 18, 17, 10,      // left top row
-    25, 22, 19, 16, 11,  8,  // left home row (+ = on inner column)
-    26, 21, 20, 15, 12,  7,  // left bottom row (+ * on inner column)
-    36, 37, 44, 45, 50,      // right top row
-    35, 38, 43, 46, 49, 52,  // right home row (+ = on inner column)
-    34, 39, 42, 47, 48       // right bottom row
+    23, 18, 17,              // left:  7 8 9
+    22, 19, 16, 11,          // left:  4 5 6 0
+    21, 20, 15,              // left:  1 2 3
+    37, 44, 45,              // right: 7 8 9
+    38, 43, 46, 49,          // right: 4 5 6 0
+    39, 42, 47               // right: 1 2 3
 };
 
 // Function: F1-F12, plus Caps Lock on the left home pinky.
@@ -57,6 +54,11 @@ static const char adjust_leds[] = {
     25, 22, 19, 16, 11,      // left home row: RGB toggle / hue / sat / val / spd up
     26, 21, 20, 15, 12       // left bottom row: RGB mode / hue / sat / val / spd down
 };
+
+// Dimmed indicator colors (~1/4 of the full RGB_* macros) for the layers that
+// light keys on both hands, to keep current low on the TRRS-powered right half.
+#define NAV_DIM_PINK       60, 30, 45   // dim pink
+#define NUM_DIM_GOLDENROD  55, 42, 8    // dim goldenrod
 
 
 /*
@@ -83,12 +85,12 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             break;
         case _NAVIGATION:                               // held layer, no jump hints
             for (uint8_t i = 0; i < sizeof(nav_leds); i++) {
-                rgb_matrix_set_color(nav_leds[i], RGB_PINK);
+                rgb_matrix_set_color(nav_leds[i], NAV_DIM_PINK);
             }
             break;
         case _NUMBER:                                   // held layer, no jump hints
             for (uint8_t i = 0; i < sizeof(num_leds); i++) {
-                rgb_matrix_set_color(num_leds[i], RGB_GOLDENROD);
+                rgb_matrix_set_color(num_leds[i], NUM_DIM_GOLDENROD);
             }
             break;
         case _FUNCTION:                                 // one-shot, no jump hints
