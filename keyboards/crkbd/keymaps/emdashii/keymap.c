@@ -18,8 +18,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-// #include <stdio.h>
 #include "keycodes.h"
+
+// Custom keycodes for productivity macros (combo-triggered on the base layer).
+// Defined here rather than in keycodes.h to avoid the early-include name clash
+// with QMK's core keycodes.h (see note there).
+enum custom_keycodes {
+  SURROUND = SAFE_RANGE,  // wrap the word at the cursor in double quotes
+  SURROUND_SQ,            // wrap the word at the cursor in single quotes
+  SELLINE,                // select the whole line
+  COPY_LINE,              // copy the whole line
+  DUPLINE,                // duplicate the whole line
+  DELEND,                 // delete from the cursor to the end of the line
+  LOREMIPSUM,             // type a lorem ipsum block
+  EMDASH                  // insert an em dash
+};
 
 
 #ifdef OLED_ENABLE
@@ -28,131 +41,119 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-// QWERTY
+// Base (QWERTY)
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
 //  |   Tab  |   Q    |   W    |   E    |   R    |   T    |                    |   Y    |   U    |   I    |   O    |   P    | Bksp   |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |   Nav  |  A/GUI | S/ALT  | D/SHIFT| F/CTRL |   G    |                    |   H    | J/CTRL | K/SHIFT| L/ALT  | ;/GUI  |   '    |
+//  | CapsWd |  A/GUI | S/ALT  | D/SHIFT| F/CTRL |   G    |                    |   H    | J/CTRL | K/SHIFT| L/ALT  | ;/GUI  |   '    |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |Sft/Caps|   Z    |   X    |   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    | Escape |
+//  | MO Num |   Z    |   X    |   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    | Escape |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
-//                                      |   Del  | Spc/Num| Symbol |  | OSL Fun| Spc/Nav| Enter  |
+//                                      |   Del  | MO Nav | Enter  |  | OSL Fn |  Space | C-Bksp |
 //                                      `--------------------------'  `--------------------------'
   [_QWERTY] = LAYOUT_split_3x6_3(
-       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
-         LNAV,  HOME_A,  HOME_S,  HOME_D,  HOME_F,    KC_G,                         KC_H,  HOME_J,  HOME_K,  HOME_L,HOME_SCLN, KC_QUOT,
-      LCAPSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ESC,
-                                           KC_DEL, LNUMSPC, LOSLSYM,     LOSLFUN, LNAVSPC,  KC_ENT
-
+       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,  KC_BSPC,
+      CW_TOGG,  HOME_A,  HOME_S,  HOME_D,  HOME_F,    KC_G,                         KC_H,  HOME_J,  HOME_K,  HOME_L,HOME_SCLN,  KC_QUOT,
+   MO(_NUMBER),  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT,  KC_SLSH,   KC_ESC,
+                                  KC_DEL, MO(_NAVIGATION), KC_ENT,    LOSLFUN, KC_SPC, WORDDEL
   ),
 
-//  Navigation
+// Navigation + Symbol
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//  |Tab/LGui| Pg Up  |  Home  |   Up   |  End   |Mid Clic|                    |  Acl0  | Wh up  | Ms up  | Wh dn  |        |  Bksp  |
+//  |   !    |   @    |   #    |   $    |   %    |   ^    |                    | Ms Lft | Ms Dn  | Ms Up  | Ms Rgt | LClick | Bksp   |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | Shift  | Pg Dn  |  Left  |  Down  | Right  |Rt Click|                    |  Acl1  | Ms lft | Ms dn  | Ms rgt |        | Delete |
+//  |   (    |   )    |   [    |   ]    |   {    |   }    |                    |  Left  |  Down  |   Up   | Right  | RClick | Delete |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | QWERTY | Insert |Tab Back|Function|Tab Fwd |LeftClic|                    |  Acl2  | Wh lft |        | Wh rgt |        | Escape |
+//  |   &    |   *    |   <    |   >    |   |    |   \    |                    | Wh Lft | Wh Dn  | Wh Up  | Wh Rgt | MClick | Escape |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
-//                                      |   Alt  |Spc/Ctrl|Ctrl+Shft| | QWERTY |Spc/Ctrl| Adjust |
+//                                      | Adjust |  Nav   | Enter  |  | LLock  |  Space |        |
 //                                      `--------------------------'  `--------------------------'
   [_NAVIGATION] = LAYOUT_split_3x6_3(
-      TABLGUI, KC_PGUP,  KC_HOME,  KC_UP,  KC_END, KC_BTN3,                      KC_ACL0, KC_WH_U, KC_MS_U, KC_WH_D, XXXXXXX, KC_BSPC,
-      KC_LSFT, KC_PGDN,  KC_LEFT,KC_DOWN, KC_RGHT, KC_BTN1,                      KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,  KC_DEL,
-      LQWERTY,  KC_INS, TABBKWD, LOSLFUN, TABFWRD, KC_BTN2,                      KC_ACL2, KC_WH_L, XXXXXXX, KC_WH_R, XXXXXXX,  KC_ESC,
-                                          KC_LALT, CTRLSPC, CTRLSFT,    LQWERTY, CTRLSPC, TO(_ADJUST)
-
+      KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC,                      MS_LEFT, MS_DOWN,   MS_UP, MS_RGHT, MS_BTN1, KC_BSPC,
+      KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, MS_BTN2,  KC_DEL,
+      KC_AMPR, KC_ASTR, KC_LABK, KC_RABK, KC_PIPE, KC_BSLS,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3,  KC_ESC,
+                                         LADJUST, _______,  KC_ENT,     QK_LLCK,  KC_SPC, _______
   ),
 
-// Gaming
+// Number (numpad mirrored on both hands)
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//  | Tab    |   Q    |   W    |   E    |   R    |   T    |                    |   Y    |   U    |   I    |   O    |   P    | Bksp   |
+//  |   +    |   7    |   8    |   9    |   /    |   =    |                    |   +    |   7    |   8    |   9    |   /    | Bksp   |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | Shift  |   A    |   S    |   D    |   F    |   G    |                    |   H    |   J    |   K    |   L    |   ;    |   '    |
+//  |   -    |   4    |   5    |   6    |   *    |        |                    |   -    |   4    |   5    |   6    |   *    |   =    |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | Ctrl   |   Z    |   X    |   C    |   V    |   B    |                    |   N    |   M    |   ,    |   .    |   /    |  Esc   |
+//  | MO Num |   1    |   2    |   3    |   .    |        |                    |   0    |   1    |   2    |   3    |   .    | Escape |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
-//                                      | Spc/Fun| Space  |Spc/Num |  | QWERTY | Spc/Fun| Enter  |
-//                                      `--------------------------'  `--------------------------'
-  [_GAMING] = LAYOUT_split_3x6_3(
-       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
-      KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
-      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ESC,
-                                          LFUNSPC,  KC_SPC, LNUMSPC,     LQWERTY, LFUNSPC,  KC_ENT
-
-  ),
-
-// Number
-//  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//  |   `    |   1    |   2    |   3    |   4    |   5    |                    |   6    |   7    |   8    |   9    |   0    |  Bksp  |
-//  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | Shift  |        |        |        |        |        |                    |   =    |   4    |   5    |   6    |   -    |   +    |
-//  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | QWERTY |        |        |        |        |        |                    |   :    |   1    |   2    |   3    |   /    |   *    |
-//  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
-//                                      |   Del  |Spc/Ctrl|  Enter |  | QWERTY |   0    |   .    |
+//                                      | Adjust |  Nav   | Enter  |  | LLock  |  Space |        |
 //                                      `--------------------------'  `--------------------------'
   [_NUMBER] = LAYOUT_split_3x6_3(
-       KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_EQL,    KC_4,    KC_5,    KC_6, KC_MINS, KC_PLUS,
-      LQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        COLON,    KC_1,    KC_2,    KC_3, KC_SLSH, KC_ASTR,
-                                           KC_DEL, CTRLSPC,  KC_ENT,   LQWERTY,     KC_0,  KC_DOT
-
+      KC_PLUS,    KC_7,    KC_8,    KC_9, KC_SLSH,  KC_EQL,                      KC_PLUS,    KC_7,    KC_8,    KC_9, KC_SLSH, KC_BSPC,
+      KC_MINS,    KC_4,    KC_5,    KC_6, KC_ASTR, XXXXXXX,                      KC_MINS,    KC_4,    KC_5,    KC_6, KC_ASTR,  KC_EQL,
+      _______,    KC_1,    KC_2,    KC_3,  KC_DOT, XXXXXXX,                         KC_0,    KC_1,    KC_2,    KC_3,  KC_DOT,  KC_ESC,
+                                         LADJUST, _______,  KC_ENT,     QK_LLCK,  KC_SPC, _______
   ),
 
-// Symbol
-//  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//  |   ~    |   !    |   @    |   #    |   $    |   %    |                    |   ^    |   &    |   *    |   (    |   )    |  Bksp  |
-//  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |   `    |   (    |   <    |   {    |   [    |        |                    |   =    |   -    |   +    |        |   -    |   +    |
-//  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |        |   )    |   >    |   }    |   ]    |   |    |                    |   :    |   _    |  , <   |   . >  |   / ?  |   \    |
-//  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
-//                                      |  Del   |        |TO(SYM) |  | QWERTY |        |   .    |
-//                                      `--------------------------'  `--------------------------'
-  [_SYMBOL] = LAYOUT_split_3x6_3(
-      KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
-       KC_GRV, KC_LPRN,S(KC_COMM),KC_LCBR,KC_LBRC, XXXXXXX,                       KC_EQL, KC_MINS, KC_PLUS, XXXXXXX, KC_MINS, KC_PLUS,
-      XXXXXXX, KC_RPRN,S(KC_DOT),KC_RCBR, KC_RBRC, KC_PIPE,                        COLON, KC_UNDS, KC_COMM,  KC_DOT, KC_SLSH, KC_BSLS,
-                                           KC_DEL, XXXXXXX,TO(_SYMBOL), LQWERTY, XXXXXXX, KC_DOT
-
-  ),
-
-// Fuction
+// Function (one-shot from base right-inner thumb)
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
 //  |        |   F1   |   F2   |   F3   |   F4   |   F5   |                    |   F6   |   F7   |   F8   |   F9   |   F10  |        |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |        |        |        |        |        |        |                    |        |   F4   |   F5   |   F6   |   F11  |        |
+//  |        |        |        |        |        |        |                    |  F11   |  Prev  |  Play  |  Next  | Vol +  |        |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  |        |        |        |        |        |        |                    |        |   F1   |   F2   |   F3   |   F12  |        |
+//  |        |        |        |        |        |        |                    |  F12   |  Mute  |  Menu  |PrntScr | Vol -  |        |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
-//                                      |        |  Num   | Adjust |  | QWERTY |  Nav   | Gaming |
+//                                      |        |        |        |  | LLock  |        |        |
 //                                      `--------------------------'  `--------------------------'
   [_FUNCTION] = LAYOUT_split_3x6_3(
-      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,  KC_F4,    KC_F5,                          KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        XXXXXXX,   KC_F4,   KC_F5,   KC_F6,  KC_F11, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                        XXXXXXX,   KC_F1,   KC_F2,   KC_F3,  KC_F12, XXXXXXX,
-                                          XXXXXXX,    LNUM, LADJUST,        LQWERTY,  LNAV, TO(_GAMING)
-
+      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_F11, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_F12, KC_MUTE,  KC_APP, KC_PSCR, KC_VOLD, XXXXXXX,
+                                         _______, _______, _______,     QK_LLCK, _______, _______
   ),
 
-
-// Adjust
+// Adjust (toggle access from Nav / Number)
 //  ,-----------------------------------------------------.                    ,-----------------------------------------------------.
-//  |  Reset |        |        |        |        |PrintScr|                    | NumLock|CapsLock|ScrollLock|      | Bright+|  Vol+  |
+//  |  Boot  | EE Clr |        |        |        |PrntScr |                    | NumLck | CapsLk | ScrlLk |        | Bright+|  Vol+  |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | On/Off | Hue ↑  | Sat ↑  | Brght ↑|        |        |                    | Number |        |        |        | Bright-|  Vol-  |
+//  | RGB Tg | Hue +  | Sat +  | Val +  | Spd +  |        |                    | QWERTY |        |        |        | Bright-|  Vol-  |
 //  |--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-//  | Cycle  | Hue ↓  | Sat ↓  | Brght ↓|        |        |                    |SetQWERTY|       |        |        |        |  Mute  |
+//  | RGB Md | Hue -  | Sat -  | Val -  | Spd -  |        |                    | QWERTY |  Prev  |  Play  |  Next  |        |  Mute  |
 //  `--------+--------+--------+--------+--------+--------+--------.  .--------+--------+--------+--------+--------+--------+--------'
-//                                      |        |        |        |  | QWERTY |  Nav   | Gaming |
+//                                      |        |        |        |  | LLock  |        |        |
 //                                      `--------------------------'  `--------------------------'
   [_ADJUST] = LAYOUT_split_3x6_3(
-        RESET, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,                       KC_NUM, KC_CAPS, KC_SCRL, XXXXXXX, KC_BRIU, KC_VOLU,
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                         LNUM, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_VOLD,
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      SQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE,
-                                          XXXXXXX, XXXXXXX, XXXXXXX,     LQWERTY,   LNAV, TO(_GAMING)
+      QK_BOOT,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,                       KC_NUM, KC_CAPS, KC_SCRL, XXXXXXX, KC_BRIU, KC_VOLU,
+      RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX,                      SQWERTY, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_VOLD,
+      RM_NEXT, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX,                      LQWERTY, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, KC_MUTE,
+                                         _______, _______, _______,     QK_LLCK, _______, _______
   )
+};
+
+// Combos (base layer) ---------------------------------------------------------
+const uint16_t PROGMEM combo_equal[]  = {HOME_J, HOME_K, COMBO_END};
+const uint16_t PROGMEM combo_plus[]   = {HOME_K, HOME_L, COMBO_END};
+const uint16_t PROGMEM combo_minus[]  = {HOME_L, HOME_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_tilde[]  = {HOME_J, HOME_L, COMBO_END};
+const uint16_t PROGMEM combo_emdash[] = {HOME_K, HOME_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_dquote[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_squote[] = {KC_I, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_selline[]= {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_copyln[] = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM combo_dupln[]  = {KC_DOT, KC_SLSH, COMBO_END};
+const uint16_t PROGMEM combo_lorem[]  = {KC_T, KC_Y, COMBO_END};
+const uint16_t PROGMEM combo_delend[] = {KC_G, KC_H, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(combo_equal,  KC_EQL),
+    COMBO(combo_plus,   KC_PLUS),
+    COMBO(combo_minus,  KC_MINS),
+    COMBO(combo_tilde,  KC_TILD),
+    COMBO(combo_emdash, EMDASH),
+    COMBO(combo_dquote, SURROUND),
+    COMBO(combo_squote, SURROUND_SQ),
+    COMBO(combo_selline,SELLINE),
+    COMBO(combo_copyln, COPY_LINE),
+    COMBO(combo_dupln,  DUPLINE),
+    COMBO(combo_lorem,  LOREMIPSUM),
+    COMBO(combo_delend, DELEND),
 };
 
 void set_keylog(uint16_t keycode, keyrecord_t *record);
@@ -165,13 +166,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 #endif // OLED_ENABLE
 
-    switch (keycode) {
-        case LADJUST:
-            if  (!host_keyboard_led_state().num_lock) {
-                tap_code(KC_NUMLOCK);
-            }
-        return true;
-        break;
+    if (record->event.pressed) {
+        switch (keycode) {
+            case SURROUND:
+                // Select the word at the cursor and wrap it in double quotes.
+                SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) "\"" SS_LCTL(SS_TAP(X_RIGHT)) "\"");
+                return false;
+            case SURROUND_SQ:
+                // Same, but single quotes.
+                SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) "'" SS_LCTL(SS_TAP(X_RIGHT)) "'");
+                return false;
+            case SELLINE:
+                // Home, Shift+End -> selects the whole line.
+                SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)));
+                return false;
+            case COPY_LINE:
+                // SELLINE + Ctrl+C.
+                SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SS_LCTL("c"));
+                return false;
+            case DUPLINE:
+                // COPY_LINE + End, Enter, Ctrl+V.
+                SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SS_LCTL("c")
+                            SS_TAP(X_END) SS_TAP(X_ENTER) SS_LCTL("v"));
+                return false;
+            case DELEND:
+                // Shift+End, Delete -> trims from cursor to end of line.
+                SEND_STRING(SS_LSFT(SS_TAP(X_END)) SS_TAP(X_DELETE));
+                return false;
+            case LOREMIPSUM:
+                SEND_STRING("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+                            "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+                return false;
+            case EMDASH:
+                // Windows Alt+0151 numpad code for an em dash.
+                SEND_STRING(SS_DOWN(X_LALT) SS_TAP(X_KP_0) SS_TAP(X_KP_1)
+                            SS_TAP(X_KP_5) SS_TAP(X_KP_1) SS_UP(X_LALT));
+                return false;
+        }
     }
     return true;
 }

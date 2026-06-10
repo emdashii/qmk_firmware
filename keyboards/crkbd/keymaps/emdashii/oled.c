@@ -25,48 +25,47 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
-// #define _QWERTY 0
-// #define _NAVIGATION 1
-// #define _GAMING 2
-// #define _NUMBER 3
-// #define _SYMBOL 4
-// #define _FUNCTION 5
-// #define _ADJUST 6
-
-// This renders, but the switching function is very broken.
 void oled_render_layer_state(void) {
-    oled_write_P(PSTR("\nLayer: "), false);
+    oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state|default_layer_state)) {
         case _QWERTY:
-            oled_write_ln_P(PSTR("QWERTY"), false);
+            oled_write_ln_P(PSTR("Base"), false);
             break;
         case _NAVIGATION:
-            oled_write_ln_P(PSTR("Navigation"), false);
-            break;
-        case _GAMING:
-            oled_write_ln_P(PSTR("Gaming"), false);
+            oled_write_ln_P(PSTR("Nav+Sym"), false);
             break;
         case _NUMBER:
-            oled_write_ln_P(PSTR("Numbers"), false);
-            break;
-        case _SYMBOL:
-            oled_write_ln_P(PSTR("Symbols"), false);
+            oled_write_ln_P(PSTR("Number"), false);
             break;
         case _FUNCTION:
-            oled_write_ln_P(PSTR("Fn Keys"), false);
+            oled_write_ln_P(PSTR("Function"), false);
             break;
         case _ADJUST:
-            oled_write_ln_P(PSTR("Settings"), false);
+            oled_write_ln_P(PSTR("Adjust"), false);
             break;
         default:
-            oled_write_ln_P(PSTR("Default"), false);
+            oled_write_ln_P(PSTR("Unknown"), false);
             break;
     }
 }
 
+// Typing speed (WPM).
+void oled_render_wpm(void) {
+    oled_write_P(PSTR("WPM:   "), false);
+    oled_write_ln(get_u8_str(get_current_wpm(), ' '), false);
+}
 
-//
-char keylog_str[24] = {};
+// Modifier / caps state: S C A G, plus Caps Word and Caps Lock.
+void oled_render_mod_status(void) {
+    uint8_t mods = get_mods() | get_oneshot_mods();
+    oled_write_P((mods & MOD_MASK_SHIFT) ? PSTR("S") : PSTR("-"), false);
+    oled_write_P((mods & MOD_MASK_CTRL)  ? PSTR("C") : PSTR("-"), false);
+    oled_write_P((mods & MOD_MASK_ALT)   ? PSTR("A") : PSTR("-"), false);
+    oled_write_P((mods & MOD_MASK_GUI)   ? PSTR("G") : PSTR("-"), false);
+    oled_write_P(is_caps_word_on() ? PSTR(" CW") : PSTR("   "), false);
+    oled_write_ln_P(host_keyboard_led_state().caps_lock ? PSTR(" CAP") : PSTR("    "), false);
+}
+
 
 const char code_to_name[60] = {
     ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
@@ -75,37 +74,6 @@ const char code_to_name[60] = {
     '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
     'R', 'E', 'B', 'T', '_', '-', '=', '[', ']', '\\',
     '#', ';', '\'', '`', ',', '.', '/', ' ', ' ', ' '};
-
-uint8_t last_row = 0;
-uint8_t last_col = 0;
-
-// this code does not run yet. error on name. potentially simpler
-// void set_keylog(uint16_t keycode, keyrecord_t *record) {
-//     char name = ' ';
-//     if ((keycode >= QK_MOD_TAP && keycode <= QK_MOD_TAP_MAX) ||
-//         (keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX)) { keycode = keycode & 0xFF; }
-//     if (keycode < 60) {
-//         name = code_to_name[keycode];
-//     }
-//     // update keylog
-//     oled_write(get_u8_str(record->event.key.row, ' '), false);
-//     oled_write_P(PSTR("x"), false);
-//     oled_write(get_u8_str(record->event.key.col, ' '), false);
-//     oled_write_P(PSTR(", k"), false);
-//     oled_write(get_u16_str(keycode, ' '), false);
-//     oled_write_P(PSTR(" : "), false);
-//     oled_write(name, false);
-//     last_row = record->event.key.row;
-//     last_col = record->event.key.col;
-// }
-
-// void oled_render_keylog(void) {
-//     // oled_write_char(last_row + '0', false);
-//     // oled_write_char('x', false);
-//     // oled_write_char(last_col + '0', false);
-//     oled_write(keylog_str, false);
-// }
-
 
 // code from r2g.c, Copyright 2019 @foostan, 2020 Drashna Jaelre <@drashna>, 2021 Elliot Powell @e11i0t23
 
@@ -143,6 +111,7 @@ void oled_render_keylog(void) {
     oled_write(depad_str(last_keycode_r2g_str, ' '), false);
     oled_write_P(PSTR(":"), false);
     oled_write_char(key_name_r2g, false);
+    oled_advance_page(true);  // clear to end of line and move to the next
 }
 
 static void oled_render_logo(void) {
@@ -168,13 +137,12 @@ static void oled_render_logo(void) {
 
 bool oled_task_user(void) {
     if (is_keyboard_master ()) {
-        oled_render_layer_state();
-        oled_render_keylog();
+        oled_render_layer_state();   // line 1: layer name
+        oled_render_keylog();        // line 2: last key pressed
+        oled_render_wpm();           // line 3: typing speed
+        oled_render_mod_status();    // line 4: modifier / caps state
     } else {
-        // render_YOUR_logo();
         oled_render_logo();
-        // oled_scroll_right();
-        // oled_scroll_set_speed(4);
     }
     return false;
 }

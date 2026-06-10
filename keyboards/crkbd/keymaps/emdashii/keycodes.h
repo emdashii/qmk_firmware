@@ -19,13 +19,15 @@
 enum crkbd_layers {
   _QWERTY,
   _NAVIGATION,
-  _GAMING,
   _NUMBER,
-  _SYMBOL,
   _FUNCTION,
   _ADJUST
 };
 
+// NOTE: custom macro keycodes (SURROUND, SELLINE, ...) live in keymap.c, not
+// here. This file shares the name "keycodes.h" with QMK's core header, so it
+// gets pulled in very early during the include chain (via keymap_us.h) before
+// SAFE_RANGE is defined -- anything referencing SAFE_RANGE must stay out.
 
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
@@ -39,30 +41,11 @@ enum crkbd_layers {
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
-// Special layer navigation keys
-#define LNUMSPC LT(_NUMBER, KC_SPC)
-#define LFUNSPC LT(_FUNCTION, KC_SPC)
-#define LSYMDEL LT(_SYMBOL, KC_DEL)
-#define LNAVSPC LT(_NAVIGATION, KC_SPC)
-#define LOSLFUN OSL(_FUNCTION)
-#define LOSLSYM OSL(_SYMBOL)
-#define SQWERTY DF(_QWERTY)
-#define LQWERTY TO(_QWERTY)
-#define LNAV    TO(_NAVIGATION)
-#define LADJUST TO(_ADJUST)
-#define LNUM    TO(_NUMBER)
-// #define LNAVCSX C(S(LT(_NAVIGATION, XXXXXXX)))  // This is a test
-// #define LNAVENT C(LT(_NAVIGATION, KC_ENT))      // This is a test
+// Layer access / exits
+#define LOSLFUN OSL(_FUNCTION)   // base right-inner thumb: one-shot Function
+#define SQWERTY DF(_QWERTY)      // set QWERTY as the default layer
+#define LQWERTY TO(_QWERTY)      // jump back to base
+#define LADJUST TO(_ADJUST)      // jump to Adjust
 
-// Misc combined keys
-#define CTRLSPC LCTL_T(KC_SPC)
-#define CTRLSFT C(KC_LSFT)
-#define COLON S(KC_SCLN)
-#define TABLGUI LGUI_T(KC_TAB)
-#define LCAPSFT LSFT_T(KC_CAPS)
-
-// Tab movement
-#define TABFWRD C(KC_TAB)
-#define TABBKWD C(S(KC_TAB))
-
-//OSM(MOD_LSFT) One Shot Modifer Shift Key
+// Word delete on the base right-outer thumb (Ctrl+Backspace)
+#define WORDDEL LCTL(KC_BSPC)

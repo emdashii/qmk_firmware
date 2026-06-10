@@ -18,112 +18,95 @@
 #include QMK_KEYBOARD_H
 #include "keycodes.h"
 
-static const char qwerty_leds[] = {22, 19, 16, 11, 38, 43, 46, 49};
-static const char gaming_leds[] = {18, 22, 19, 16, 13};
-static const char sym_leds[] = {22,19,16,11,21,20,15,12,34,35,38,39,43,24,25,7,49,52,48,53};
-static const char nav_leds[] = {38, 43, 44, 46};
-static const char num_leds[] = {45, 44, 37, 46, 43, 38, 47, 42, 39, 40};
-static const char fun_leds[] = {45, 44, 37, 46, 43, 38, 47, 42, 39, 50, 49, 48};
-static const char mouse_leds[] = {11, 16, 17, 19};
-static const char adjust_leds[] = {25, 22, 19, 16, 26, 21, 20, 15};
-static const char top_right_leds[] = {23, 18, 17, 10, 9};
-static const char adjust_other_leds[] = {36, 37, 44, 50, 51, 49, 52, 53, 9};
+// LED index reference (from the template at the bottom of this file).
+// Base home-row keys: A S D F (L) / J K L ; (R).
+static const char home_leds[] = {22, 19, 16, 11, 38, 43, 46, 49};
+
+// Navigation + Symbol: mouse-move + arrows (right hand) and the full symbol
+// block (left hand).
+static const char nav_leds[] = {
+    36, 37, 44, 45,          // right top row: mouse move
+    35, 38, 43, 46,          // right home row: arrows
+    24, 23, 18, 17, 10,  9,  // left top row: symbols
+    25, 22, 19, 16, 11,  8,  // left home row: brackets
+    26, 21, 20, 15, 12,  7   // left bottom row: more symbols
+};
+
+// Number: the mirrored numpad block on both hands.
+static const char num_leds[] = {
+    24, 23, 18, 17, 10,      // left top row
+    25, 22, 19, 16, 11,      // left home row
+    26, 21, 20, 15, 12,      // left bottom row
+    36, 37, 44, 45, 50,      // right top row
+    35, 38, 43, 46, 49,      // right home row
+    34, 39, 42, 47, 48       // right bottom row
+};
+
+// Function: F1-F12 only.
+static const char fun_leds[] = {
+    23, 18, 17, 10,  9,      // left top row: F1-F5
+    36, 37, 44, 45, 50,      // right top row: F6-F10
+    35,                      // right home pinky: F11
+    34                       // right bottom pinky: F12
+};
+
+// Adjust: the RGB control block on the left hand.
+static const char adjust_leds[] = {
+    25, 22, 19, 16, 11,      // left home row: RGB toggle / hue / sat / val / spd up
+    26, 21, 20, 15, 12       // left bottom row: RGB mode / hue / sat / val / spd down
+};
 
 
 /*
-  _QWERTY = RGB_CORAL   (calm white)
+  _QWERTY     = RGB_CORAL  home row, with access keys in their own colors
   _NAVIGATION = RGB_PINK
-  _GAMING = RGB_SPRINGGREEN
-  _NUMBER = RGB_GOLDENROD
-  _SYMBOL = RGB_ORANGE
-  _FUNCTION = RGB_MAGENTA
-  _ADJUST = RGB_RED
+  _NUMBER     = RGB_GOLDENROD
+  _FUNCTION   = RGB_MAGENTA
+  _ADJUST     = RGB_RED
 */
 
-void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (host_keyboard_led_state().caps_lock) {
-        rgb_matrix_set_color(26, RGB_RED);
+        rgb_matrix_set_color(25, RGB_RED);              // Caps Word / Caps Lock spot
     }
-    switch(get_highest_layer(layer_state|default_layer_state)) {
+    switch (get_highest_layer(layer_state | default_layer_state)) {
         case _QWERTY:
-            for (uint8_t i = 0; i < 8; i++) {
-                rgb_matrix_set_color(qwerty_leds[i], RGB_CORAL);
+            for (uint8_t i = 0; i < sizeof(home_leds); i++) {
+                rgb_matrix_set_color(home_leds[i], RGB_CORAL);
             }
-            rgb_matrix_set_color(13, RGB_GOLDENROD);        // To Numbers
-            rgb_matrix_set_color(6, RGB_ORANGE);            // To Symbols
-            rgb_matrix_set_color(25, RGB_PINK);             // To Nav
-            rgb_matrix_set_color(40, RGB_PINK);             // To Nav
-            rgb_matrix_set_color(33, RGB_MAGENTA);          // To Function keys
+            rgb_matrix_set_color(25, RGB_WHITE);        // Caps Word
+            rgb_matrix_set_color(13, RGB_PINK);         // MO Navigation (left middle thumb)
+            rgb_matrix_set_color(26, RGB_GOLDENROD);    // MO Number (lower-left pinky)
+            rgb_matrix_set_color(33, RGB_MAGENTA);      // OSL Function (right inner thumb)
             break;
-        case _NAVIGATION:
-            for (uint8_t i = 0; i < 4; i++) {
+        case _NAVIGATION:                               // held layer, no jump hints
+            for (uint8_t i = 0; i < sizeof(nav_leds); i++) {
                 rgb_matrix_set_color(nav_leds[i], RGB_PINK);
-                rgb_matrix_set_color(mouse_leds[i], RGB_PINK);
             }
-            rgb_matrix_set_color(33, RGB_CORAL);            // To qwerty
-            rgb_matrix_set_color(26, RGB_CORAL);            // To qwerty
-            rgb_matrix_set_color(41, RGB_RED);              // To Adjust
-            rgb_matrix_set_color(15, RGB_MAGENTA);          // To Function keys
             break;
-        case _GAMING:
-            if (is_keyboard_master()) {
-                for (uint8_t i = 0; i < 5; i++) {
-                    rgb_matrix_set_color(gaming_leds[i], RGB_SPRINGGREEN);
-                }
-            }
-            rgb_matrix_set_color(33, RGB_CORAL);            // To qwerty
-            rgb_matrix_set_color(13, RGB_SPRINGGREEN);      // Spacebar
-            rgb_matrix_set_color(6, RGB_GOLDENROD);         // To numbers
-            rgb_matrix_set_color(40, RGB_MAGENTA);          // To function keys
-            rgb_matrix_set_color(14, RGB_MAGENTA);          // To function keys
-            break;
-        case _NUMBER:
-            for (uint8_t i = 0; i < 10; i++) {
+        case _NUMBER:                                   // held layer, no jump hints
+            for (uint8_t i = 0; i < sizeof(num_leds); i++) {
                 rgb_matrix_set_color(num_leds[i], RGB_GOLDENROD);
             }
-            for (uint8_t i = 0; i < 5; i++) {
-                rgb_matrix_set_color(top_right_leds[i], RGB_GOLDENROD);
-            }
-            rgb_matrix_set_color(26, RGB_CORAL);            // To qwerty
-            rgb_matrix_set_color(33, RGB_CORAL);            // To qwerty
             break;
-        case _SYMBOL:
-            for (uint8_t i = 0; i < 20; i++) {
-                rgb_matrix_set_color(sym_leds[i], RGB_ORANGE);
-            }
-            for (uint8_t i = 0; i < 5; i++) {
-                rgb_matrix_set_color(top_right_leds[i], RGB_ORANGE);
-            }
-            rgb_matrix_set_color(6, RGB_ORANGE);            // To Symbols
-            rgb_matrix_set_color(33, RGB_CORAL);            // To qwerty
-            rgb_matrix_set_color(13, RGB_GOLDENROD);        // To Numbers
-            break;
-        case _FUNCTION:
-            for (uint8_t i = 0; i < 12; i++) {
+        case _FUNCTION:                                 // one-shot, no jump hints
+            for (uint8_t i = 0; i < sizeof(fun_leds); i++) {
                 rgb_matrix_set_color(fun_leds[i], RGB_MAGENTA);
             }
-            for (uint8_t i = 0; i < 5; i++) {
-                rgb_matrix_set_color(top_right_leds[i], RGB_MAGENTA);
-            }
-            rgb_matrix_set_color(33, RGB_CORAL);            // To qwerty
-            rgb_matrix_set_color(41, RGB_SPRINGGREEN);      // To gaming
-            rgb_matrix_set_color(40, RGB_PINK);             // To navigation
-            rgb_matrix_set_color(6, RGB_RED);               // To Adjust
             break;
-        case _ADJUST:
-            rgb_matrix_set_color(24, RGB_GREEN);            // Reset key
-            for (uint8_t i = 0; i < 8; i++) {
+        case _ADJUST:                                   // toggle layer, keeps jump hints
+            rgb_matrix_set_color(24, RGB_GREEN);        // Boot
+            for (uint8_t i = 0; i < sizeof(adjust_leds); i++) {
                 rgb_matrix_set_color(adjust_leds[i], RGB_RED);
             }
-            for (uint8_t i = 0; i < 9; i++) {
-                rgb_matrix_set_color(adjust_other_leds[i], RGB_RED);
-            }
-            rgb_matrix_set_color(33, RGB_CORAL);            // To qwerty
-            rgb_matrix_set_color(41, RGB_SPRINGGREEN);      // To gaming
-            rgb_matrix_set_color(40, RGB_PINK);             // To navigation
-            rgb_matrix_set_color(35, RGB_GOLDENROD);        // To number
+            rgb_matrix_set_color(36, RGB_RED);          // Num Lock
+            rgb_matrix_set_color(37, RGB_RED);          // Caps Lock
+            rgb_matrix_set_color(44, RGB_RED);          // Scroll Lock
+            rgb_matrix_set_color(35, RGB_CORAL);        // DF(QWERTY)
+            rgb_matrix_set_color(34, RGB_CORAL);        // TO(QWERTY)
             break;
     }
+    return false;
 }
 
 // CRKBD LED TEMPLATE (learned through much thought (and trial and error))
