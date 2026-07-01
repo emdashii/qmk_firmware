@@ -70,6 +70,10 @@ static const char adjust_leds[] = {
 */
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (rgb_matrix_get_suspend_state()) {
+        return false;
+    }
+
     if (host_keyboard_led_state().caps_lock) {
         rgb_matrix_set_color(25, RGB_RED);              // Caps Word / Caps Lock spot
     }

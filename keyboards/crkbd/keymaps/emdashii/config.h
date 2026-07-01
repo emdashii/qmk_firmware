@@ -71,7 +71,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // recording presses just costs flash on the already-tight atmega32u4.
 // #   define RGB_MATRIX_KEYPRESSES // reacts to keypresses
 // #   define RGB_MATRIX_KEYRELEASES // reacts to keyreleases (instead of keypresses)
-// #   define RGB_DISABLE_AFTER_TIMEOUT 0 // number of ticks to wait until disabling effects
+#   define RGB_MATRIX_TIMEOUT 3600000 // disable RGB after one hour without input
 #   define RGB_DISABLE_WHEN_USB_SUSPENDED // turn off effects when suspended
 // RGB_MATRIX_FRAMEBUFFER_EFFECTS disabled to save flash (atmega32u4 is tight);
 // the keymap runs in SOLID_COLOR mode with per-key indicators, not animations.
@@ -139,6 +139,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
+#define OLED_TIMEOUT 3600000 // disable OLEDs after one hour without input
 
 // might need this? from toinux config.h file
 
