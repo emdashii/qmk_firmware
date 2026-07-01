@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>emdashii CRKBD Planned Updates</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f1e8;
+      --panel: #fffaf2;
+      --text: #1f2328;
+      --muted: #5b6572;
+      --accent: #0f5b78;
+      --accent-2: #8b5e34;
+      --border: #d7c7b3;
+      --shadow: 0 16px 40px rgba(43, 28, 12, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 16px/1.6 "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(15, 91, 120, 0.12), transparent 34%),
+        radial-gradient(circle at top right, rgba(139, 94, 52, 0.11), transparent 30%),
+        linear-gradient(180deg, #fbf7ef 0%, var(--bg) 100%);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    header {
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(255, 250, 242, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    h1, h2, h3 { line-height: 1.15; margin: 0 0 12px; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); letter-spacing: -0.03em; }
+    h2 { font-size: 1.4rem; margin-top: 32px; }
+    h3 { font-size: 1.05rem; margin-top: 20px; }
+    p, li { color: var(--text); }
+    p { margin: 0 0 14px; }
+
+    .lede { max-width: 80ch; color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    section, .card {
+      background: rgba(255, 250, 242, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    ul, ol { margin: 10px 0 0 20px; padding: 0; }
+    li { margin: 6px 0; }
+    .tagrow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--accent);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      min-width: 720px;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f0e6d9;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    tr:last-child td { border-bottom: 0; }
+    code, pre {
+      font-family: Consolas, "Cascadia Mono", "SFMono-Regular", monospace;
+      font-size: 0.95em;
+    }
+    code {
+      background: #f2efe9;
+      padding: 0.15em 0.35em;
+      border-radius: 6px;
+      border: 1px solid #e5dacb;
+    }
+    pre {
+      background: #2b2622;
+      color: #f4ece0;
+      padding: 16px;
+      border-radius: 14px;
+      overflow-x: auto;
+      line-height: 1.35;
+    }
+    pre code { background: none; border: 0; padding: 0; color: inherit; }
+    a { color: var(--accent); }
+    .small { color: var(--muted); font-size: 0.95rem; }
+    .callout {
+      border-left: 4px solid var(--accent-2);
+      padding: 14px 16px;
+      background: #fff7ee;
+      border-radius: 12px;
+      margin-top: 14px;
+    }
+    .warn {
+      border-left: 4px solid #b3331f;
+      background: #fff1ee;
+    }
+    .pill { font-weight: 700; }
+    .c-nav   { color: #c0398f; }
+    .c-num   { color: #b8860b; }
+    .c-fn    { color: #a01ea0; }
+    .c-adj   { color: #b3331f; }
+    .c-base  { color: #0f5b78; }
+    .combo-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
+    .combo-filters button {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font: 700 0.85rem "Segoe UI", system-ui, sans-serif;
+      color: #333;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: opacity .15s, box-shadow .15s;
+    }
+    .combo-filters button .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .combo-filters button.off { opacity: 0.38; }
+    .combo-board-wrap { overflow-x: auto; margin-top: 8px; }
+    .combo-board {
+      position: relative;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin: 0 auto;
+    }
+    .combo-key {
+      position: absolute;
+      width: 40px; height: 40px;
+      border: 1.5px solid #d7c7b3;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font: 700 13px Consolas, "Cascadia Mono", monospace;
+      background: #faf6ee; color: #9aa3ad;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .combo-key.hot { color: #1f2328; background: #fffdf8; border-color: #b9a98f; box-shadow: 0 2px 6px rgba(43,28,12,.08); }
+    .combo-svg { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+    .combo-svg path { fill: none; stroke-width: 4; stroke-linecap: round; opacity: 0.85; }
+    .combo-badge rect { rx: 6; }
+    .combo-badge text { font: 700 11px "Segoe UI", system-ui, sans-serif; }
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>emdashii CRKBD Planned Updates</h1>
+      <p class="lede">
+        Working plan for bringing <code>keyboards/crkbd/keymaps/emdashii</code> up to the current TOTEM
+        daily-driver shape, using the extra CRKBD keys for dedicated roles and adopting current QMK
+        features. This revision reflects the decisions made in the planning session and is the build target.
+      </p>
+      <div class="tagrow">
+        <span class="tag">Base &middot; Nav+Symbol &middot; Number &middot; Function &middot; Adjust</span>
+        <span class="tag">No Gaming layer</span>
+        <span class="tag">No Utility layer (combos stay on base)</span>
+        <span class="tag">Home-row mods kept</span>
+        <span class="tag">Layer Lock replaces Repeat</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>Locked-In Decisions</h2>
+      <ul>
+        <li><strong>Caps Word</strong> moves to the <strong>left-middle pinky</strong> (the physical Caps Lock spot), as a plain <code>CW_TOGG</code>.</li>
+        <li><strong>Repeat Key is dropped.</strong> The <strong>right-inner thumb</strong> is <code>OSL(_FUNCTION)</code> on the base layer and <strong>Layer Lock</strong> (<code>QK_LLCK</code>) on every other layer &mdash; one physical key with a sensible job on each layer.</li>
+        <li><strong>Navigation</strong> is a <strong>momentary hold</strong> on the <strong>left-middle thumb</strong> (<code>MO(_NAVIGATION)</code>).</li>
+        <li><strong>Number</strong> is a <strong>momentary hold</strong> on the <strong>lower-left pinky</strong> (<code>MO(_NUMBER)</code>), and its digits are <strong>mirrored onto the left hand</strong> so either hand alone can type numbers.</li>
+        <li><strong>Word-delete</strong> (<code>Ctrl+Backspace</code>) moves off the old O+P combo onto the <strong>right-outer thumb</strong> (transparent on the non-base layers).</li>
+        <li><strong>Layers:</strong> Symbols merge into Navigation (Nav+Symbol). Number and Function are their own layers. Adjust stays. <strong>Gaming and Utility layers are removed.</strong></li>
+        <li><strong>Single Nav key</strong> (left thumb only) &mdash; no second nav access on the right.</li>
+        <li><strong>Combos remain on the base layer</strong> and the productivity macros are kept (see below).</li>
+        <li><strong>OLEDs:</strong> off-hand half keeps the emdashii art; master half shows layer name, last key, WPM, and modifier/caps state.</li>
+      </ul>
+    </section>
+
+    <section class="warn callout">
+      <h2 style="margin-top:0">&#9888; Blocker: the current keymap will not compile</h2>
+      <p>
+        The checked-in <code>keymap.c</code> still uses keycodes that were removed from QMK. These must be
+        replaced before anything else builds. This is the first implementation step.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Old (removed)</th><th>New (current QMK)</th><th>Where</th></tr></thead>
+          <tbody>
+            <tr><td><code>RESET</code></td><td><code>QK_BOOT</code></td><td>Adjust layer</td></tr>
+            <tr><td><code>RGB_TOG</code></td><td><code>RM_TOGG</code></td><td>Adjust layer</td></tr>
+            <tr><td><code>RGB_MOD</code></td><td><code>RM_NEXT</code></td><td>Adjust layer</td></tr>
+            <tr><td><code>RGB_HUI</code> / <code>RGB_HUD</code></td><td><code>RM_HUEU</code> / <code>RM_HUED</code></td><td>Adjust layer</td></tr>
+            <tr><td><code>RGB_SAI</code> / <code>RGB_SAD</code></td><td><code>RM_SATU</code> / <code>RM_SATD</code></td><td>Adjust layer</td></tr>
+            <tr><td><code>RGB_VAI</code> / <code>RGB_VAD</code></td><td><code>RM_VALU</code> / <code>RM_VALD</code></td><td>Adjust layer</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small" style="margin-top:12px">
+        Verified against this repo's <code>quantum/keycodes.h</code>: the legacy <code>RGB_*</code> aliases and
+        <code>RESET</code> are gone; <code>RM_*</code>, <code>QK_BOOT</code>, <code>QK_LLCK</code> (Layer Lock),
+        <code>QK_REP</code> (Repeat), and <code>CW_TOGG</code> (Caps Word) are the current spellings.
+      </p>
+    </section>
+
+    <section>
+      <h2>QMK Features In Use</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Right-inner thumb: OSL &rarr; Layer Lock</h3>
+          <p>
+            One physical key, layer-dependent. On <strong>base</strong> it is <code>OSL(_FUNCTION)</code> (tap &rarr; next key
+            from Function &rarr; auto-return). On <strong>every other layer</strong> it is <code>QK_LLCK</code> (Layer Lock),
+            which pins the layer you reached by holding so you can let go: hold Nav, tap this, release &mdash; now parked in
+            Nav hands-free. Tap again to unlock.
+          </p>
+          <p class="small">References: <a href="https://docs.qmk.fm/one_shot_keys">One Shot Keys</a>, <a href="https://docs.qmk.fm/features/layer_lock">Layer Lock</a>.</p>
+        </div>
+        <div class="card">
+          <h3>Caps Word</h3>
+          <p>
+            <code>CW_TOGG</code> on the Caps Lock spot. Types one capitalized word/identifier then turns itself off
+            at the next space. Cleaner than a real Caps Lock. Shift is still available on the home row.
+          </p>
+          <p class="small">Reference: <a href="https://docs.qmk.fm/features/caps_word">Caps Word</a>.</p>
+        </div>
+        <div class="card">
+          <h3>Combos &amp; Macros</h3>
+          <p>
+            Combos stay on the base layer (no separate utility layer). Productivity actions remain firmware
+            macros via <code>SEND_STRING</code> / <code>process_record_user</code>.
+          </p>
+          <p class="small">References: <a href="https://docs.qmk.fm/features/combo">Combos</a>, <a href="https://docs.qmk.fm/features/send_string">Send String</a>.</p>
+        </div>
+        <div class="card">
+          <h3>RGB Matrix indicators</h3>
+          <p>
+            Per-key lighting via <code>rgb_matrix_indicators_advanced_user()</code> (still the current hook). Only the
+            keycodes changed (<code>RM_*</code>); the indicator callback and <code>rgb_matrix_set_color()</code> are unchanged.
+          </p>
+          <p class="small">Reference: <a href="https://docs.qmk.fm/features/rgb_matrix">RGB Matrix</a>.</p>
+        </div>
+        <div class="card">
+          <h3>WPM</h3>
+          <p>
+            Enabling <code>WPM_ENABLE = yes</code> exposes <code>get_current_wpm()</code> for the info OLED. Small flash
+            cost; fine alongside <code>LTO_ENABLE</code>.
+          </p>
+          <p class="small">Reference: <a href="https://docs.qmk.fm/features/wpm">WPM</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Final Layer Structure</h2>
+      <ol>
+        <li><strong class="c-base">Base</strong>: QWERTY, home-row mods, dedicated editing keys, dedicated layer keys.</li>
+        <li><strong class="c-nav">Navigation + Symbol</strong>: arrows + mouse on the right hand, symbols/brackets on the left. Momentary hold (left thumb).</li>
+        <li><strong class="c-num">Number</strong>: numpad mirrored on <em>both</em> hands (right-hand digits duplicated on the left) plus math operators, so either hand alone can type numbers. Momentary hold (lower-left pinky).</li>
+        <li><strong class="c-fn">Function</strong>: F1&ndash;F12. One-shot access from the base-layer right-inner thumb.</li>
+        <li><strong class="c-adj">Adjust</strong>: boot, RGB, media/brightness, board settings. Toggle access from Nav/Number.</li>
+      </ol>
+      <div class="callout">
+        The architectural rule: layer keys are single-purpose. Holding always means &ldquo;this layer,&rdquo; tapping a
+        letter always means text. No layer-tap on the normal editing path.
+      </div>
+    </section>
+
+    <section>
+      <h2>Base Layer Map</h2>
+      <pre><code>,-----------------------------------------.                ,-----------------------------------------.
+|  Tab  |  Q  |  W  |  E  |  R  |   T   |                |   Y   |  U  |  I  |  O  |  P  | Bksp |
+|-------+-----+-----+-----+-----+-------|                |-------+-----+-----+-----+-----+------|
+| CapsWd| A&#9670; | S&#9670; | D&#9670; | F&#9670; |   G   |                |   H   | J&#9670; | K&#9670; | L&#9670; | ;&#9670; |  '   |
+|-------+-----+-----+-----+-----+-------|                |-------+-----+-----+-----+-----+------|
+| MO Num|  Z  |  X  |  C  |  V  |   B   |                |   N   |  M  |  ,  |  .  |  /  | Esc  |
+`-------+-----+-----+-----+-----+-------+------.   .------+-------+-----+-----+-----+-----+------'
+                            | Del | MO Nav | Ent |   | OSL Fn | Space | C-Bsp |
+                            `---------------------'   `----------------------'
+
+&#9670; = home-row mod (GUI/ALT/SHIFT/CTRL ... CTRL/SHIFT/ALT/GUI)</code></pre>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Key position</th><th>Was</th><th>Becomes</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>Top-left pinky</td><td>Tab</td><td><code>KC_TAB</code> (dedicated)</td><td>Plain tab, no dual role.</td></tr>
+            <tr><td>Mid-left pinky (Caps Lock spot)</td><td><code>LSFT_T(KC_CAPS)</code></td><td><code>CW_TOGG</code> (Caps Word)</td><td>Your requested move; shift lives on the home row.</td></tr>
+            <tr><td>Lower-left pinky</td><td>Z-row shift/caps</td><td><code>MO(_NUMBER)</code></td><td>Hold for numpad; pairs with Layer Lock.</td></tr>
+            <tr><td>Left thumb &mdash; outer</td><td>Del</td><td><code>KC_DEL</code></td><td>Dedicated delete, kept.</td></tr>
+            <tr><td>Left thumb &mdash; middle</td><td>Tab/Nav</td><td><code>MO(_NAVIGATION)</code></td><td>Your nav hold; frees the right hand for arrows.</td></tr>
+            <tr><td>Left thumb &mdash; inner</td><td>Enter</td><td><code>KC_ENT</code></td><td>Kept.</td></tr>
+            <tr><td>Right thumb &mdash; inner</td><td>Repeat</td><td><code>OSL(_FUNCTION)</code> on base / <code>QK_LLCK</code> on other layers</td><td>One-shot to Function from base; Layer Lock everywhere else.</td></tr>
+            <tr><td>Right thumb &mdash; middle</td><td>Space</td><td><code>KC_SPC</code></td><td>Pure space, kept.</td></tr>
+            <tr><td>Right thumb &mdash; outer</td><td>Bksp</td><td><code>LCTL(KC_BSPC)</code> (word delete)</td><td>Takes over the retired O+P word-delete combo; transparent on other layers.</td></tr>
+            <tr><td>Top-right pinky</td><td>Bksp</td><td><code>KC_BSPC</code> (dedicated)</td><td>Fast editing, no modifier juggling.</td></tr>
+            <tr><td>Mid-right pinky</td><td>'</td><td><code>KC_QUOT</code> (kept)</td><td>Dedicated apostrophe stays; no second Enter (Enter is on the left-inner thumb).</td></tr>
+            <tr><td>Bottom-right pinky</td><td>Esc</td><td><code>KC_ESC</code></td><td>Kept.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">
+        Home-row mods unchanged: <code>A</code>=GUI, <code>S</code>=ALT, <code>D</code>=SHIFT, <code>F</code>=CTRL and the mirror on
+        <code>J K L ;</code>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Suggestions For The Other Keys</h2>
+      <p>Keys without a strong role yet, with proposed fills. Easy to change during implementation.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Layer</th><th>Open keys</th><th>Suggestion</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="c-nav pill">Nav+Symbol</td>
+              <td>Left-hand blanks below the symbol rows; the held-thumb cluster.</td>
+              <td>Put <code>QK_LLCK</code> within easy reach (so you can pin Nav), plus <code>TO(_ADJUST)</code> on a left key. Right hand keeps arrows + mouse from today's nav layer; add <code>Home/End/PgUp/PgDn</code> on the lower right.</td>
+            </tr>
+            <tr>
+              <td class="c-num pill">Number</td>
+              <td>Left hand (was mostly empty) now mirrors the digits.</td>
+              <td>Duplicate the right-hand numpad (1&ndash;9, 0 and operators) onto the left hand so either hand alone can type numbers. Keep <code>QK_LLCK</code> on the right-inner thumb to pin the layer, and place <code>TO(_ADJUST)</code> somewhere reachable for the exit to settings.</td>
+            </tr>
+            <tr>
+              <td class="c-fn pill">Function</td>
+              <td>Outer columns and thumbs (it is one-shot, so most thumbs are moot).</td>
+              <td>Add <code>KC_APP</code> (menu), <code>KC_PSCR</code>, and media transport (<code>KC_MPLY/MNXT/MPRV</code>) on the unused right column. One-shot means the thumb row barely matters here.</td>
+            </tr>
+            <tr>
+              <td class="c-adj pill">Adjust</td>
+              <td>Several blanks around the RGB block.</td>
+              <td>Group: boot/EE-reset, the <code>RM_*</code> controls, <code>KC_NUM/CAPS/SCRL</code> locks, brightness, and media/volume. Keep <code>DF(_QWERTY)</code> + <code>TO(_QWERTY)</code> as the exits.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Combos (base layer)</h2>
+      <p>Carried over from the TOTEM build &mdash; these fire while you are on the base layer.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Chord</th><th>Output</th><th>Group</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td>J + K</td><td><code>=</code></td><td>Math</td><td>Right home-row, adjacent pair.</td></tr>
+            <tr><td>K + L</td><td><code>+</code></td><td>Math</td><td>Right home-row, adjacent pair.</td></tr>
+            <tr><td>L + ;</td><td><code>-</code></td><td>Math</td><td>Right home-row, adjacent pair.</td></tr>
+            <tr><td>J + L</td><td><code>~</code></td><td>Math</td><td>Skip-one tilde.</td></tr>
+            <tr><td>O + P</td><td><code>SURROUND</code></td><td>Quote</td><td>Macro: wrap current word in <strong>double</strong> quotes. (Took O+P from the retired word-delete combo.)</td></tr>
+            <tr><td>I + P</td><td><code>SURROUND_SQ</code></td><td>Quote</td><td>Macro: wrap current word in <strong>single</strong> quotes. Anchored on P next to its double-quote sibling.</td></tr>
+            <tr><td>M + ,</td><td><code>SELLINE</code></td><td>Line</td><td>Macro: select whole line. <em>(pair 1 of the line walk)</em></td></tr>
+            <tr><td>, + .</td><td><code>COPY_LINE</code></td><td>Line</td><td>Macro: copy whole line. <em>(pair 2)</em></td></tr>
+            <tr><td>. + /</td><td><code>DUPLINE</code></td><td>Line</td><td>Macro: duplicate whole line. <em>(pair 3)</em></td></tr>
+            <tr><td>K + ;</td><td><code>EMDASH</code></td><td>Symbol</td><td>Macro: insert &ldquo;&mdash;&rdquo;. Sits on the home row with the math/symbol combos.</td></tr>
+            <tr><td>T + Y</td><td><code>LOREMIPSUM</code></td><td>Text</td><td>Macro: insert lorem ipsum.</td></tr>
+            <tr><td>G + H</td><td><code>DELEND</code></td><td>Edit</td><td>Macro: delete from cursor to end of line. One key per hand across the split.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">
+        <strong>Consistent line-macro pattern:</strong> the three whole-line macros (<code>SELLINE</code> &rarr;
+        <code>COPY_LINE</code> &rarr; <code>DUPLINE</code>) are adjacent pairs walking rightward along the bottom row
+        (<code>M+,</code>, <code>,+.</code>, <code>.+/</code>), so they read as one family.
+        <code>EMDASH</code> joins the home-row symbol/math combos at <code>K+;</code>, and <code>DELEND</code> (a partial-line
+        trim) sits on its own cross-split <code>G+H</code> chord.
+      </p>
+      <p class="small">
+        Removed: the old <code>Q+W</code>&rarr;Esc and <code>O+P</code>&rarr;word-delete combos (Esc is a dedicated key;
+        word-delete is now the right-outer thumb). Note the 2024 combo changes (repress behavior,
+        <code>COMBO_MUST_*</code> timing) for tuning. Reference: <a href="https://docs.qmk.fm/features/combo">Combos</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Combo Map</h2>
+      <p class="small">
+        Each link joins the two keys you press together; the badge in the middle is what it outputs. Use the buttons to
+        isolate one family at a time &mdash; with everything on at once the home row gets busy.
+      </p>
+      <div class="combo-filters" id="comboFilters"></div>
+      <div class="combo-board-wrap"><div class="combo-board" id="comboBoard"></div></div>
+      <p class="small">
+        Straight links are adjacent-key chords; arched links skip a key (e.g. <code>J+L</code>&rarr;~ and
+        <code>K+;</code>&rarr;Em&mdash;). The two cross-split links (<code>T+Y</code>, <code>G+H</code>) join the inner index
+        keys of the two halves.
+      </p>
+    </section>
+
+    <section>
+      <h2>Macros</h2>
+      <h3>Final macro set</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Macro</th><th>Trigger</th><th>Does</th></tr></thead>
+          <tbody>
+            <tr><td><code>SURROUND</code></td><td>O + P combo</td><td>Selects the word at the cursor and wraps it in <strong>double</strong> quotes.</td></tr>
+            <tr><td><code>SURROUND_SQ</code></td><td>I + P combo</td><td>Same, but wraps in <strong>single</strong> quotes. <span class="small">(new)</span></td></tr>
+            <tr><td><code>SELLINE</code></td><td>M + , combo</td><td>Home, Shift+End &mdash; selects the whole line. <span class="small">(new)</span></td></tr>
+            <tr><td><code>COPY_LINE</code></td><td>, + . combo</td><td>Home, Shift+End, Ctrl+C &mdash; copies the whole line.</td></tr>
+            <tr><td><code>DUPLINE</code></td><td>. + / combo</td><td>Home, Shift+End, Ctrl+C, End, Enter, Ctrl+V &mdash; duplicates the line. <span class="small">(new)</span></td></tr>
+            <tr><td><code>DELEND</code></td><td>G + H combo</td><td>Shift+End, Delete &mdash; trims from cursor to end of line.</td></tr>
+            <tr><td><code>LOREMIPSUM</code></td><td>T + Y combo</td><td>Types a full lorem ipsum block (for design/testing).</td></tr>
+            <tr><td><code>EMDASH</code></td><td>K + ; combo</td><td>Inserts an em dash &ldquo;&mdash;&rdquo;. <span class="small">(new)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <strong>Consistent line-macro implementation:</strong> the whole-line family is built as a strict superset chain &mdash;
+        <code>SELLINE</code> = <em>Home, Shift+End</em>; <code>COPY_LINE</code> = SELLINE <em>+ Ctrl+C</em>;
+        <code>DUPLINE</code> = COPY_LINE <em>+ End, Enter, Ctrl+V</em>. Same Home-anchored selection every time, so behavior
+        is predictable regardless of cursor position.
+      </div>
+      <h3>Dropping</h3>
+      <p class="small">
+        <code>OS_SWAP</code> (Mac/Win toggle), <code>SNAP</code> (screenshot), <code>MAKE_H</code> (compile command), and the
+        <code>EMAIL</code> idea are not carried over. The old word-delete (<code>Ctrl+Backspace</code>) is no longer a combo &mdash;
+        it lives on the right-outer thumb.
+      </p>
+    </section>
+
+    <section>
+      <h2>RGB Lighting Plan</h2>
+      <p>
+        Driven from <code>rgb_matrix_indicators_advanced_user()</code> in <code>rgb.c</code>. Base shows the home row
+        plus the keys that jump to other layers. Each layer lights its most important keys and (where it makes sense)
+        its navigation keys. <strong>Layers reached by holding (Nav, Number) do not show layer-jump hints</strong> &mdash;
+        you are only there momentarily, so &ldquo;how to get elsewhere&rdquo; is noise. Toggle-reached Adjust keeps full hints.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Layer</th><th>Color</th><th>What lights up</th><th>Layer-jump hints?</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="c-base pill">Base</td><td>Coral / white</td>
+              <td>The 8 home-row keys, plus the access keys in their own colors: Caps Word, <code>MO Nav</code> (pink),
+                <code>MO Number</code> (goldenrod), and the <code>OSL Function</code> thumb (magenta).</td>
+              <td>Yes &mdash; this is the &ldquo;map&rdquo; layer.</td>
+            </tr>
+            <tr>
+              <td class="c-nav pill">Nav+Symbol</td><td>Pink</td>
+              <td>Arrow cluster + mouse keys (right hand), and the bracket/symbol keys (left hand).</td>
+              <td><strong>No</strong> (held layer).</td>
+            </tr>
+            <tr>
+              <td class="c-num pill">Number</td><td>Goldenrod</td>
+              <td>The numpad block and operators (right hand).</td>
+              <td><strong>No</strong> (held layer).</td>
+            </tr>
+            <tr>
+              <td class="c-fn pill">Function</td><td>Magenta</td>
+              <td>F1&ndash;F12 only.</td>
+              <td>No (one-shot; you are gone after one key).</td>
+            </tr>
+            <tr>
+              <td class="c-adj pill">Adjust</td><td>Red</td>
+              <td>Boot, RGB controls, locks, media/volume &mdash; plus the exits back to base and to other layers.</td>
+              <td>Yes (toggle layer; you sit here).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">
+        LED index reference for re-mapping (from <code>rgb.c</code>): left thumbs <code>14&middot;13&middot;6</code>,
+        right thumbs <code>33&middot;40&middot;41</code>; left pinky column <code>24&middot;25&middot;26</code>;
+        home row <code>22 19 16 11</code> (L) and <code>38 43 46 49</code> (R). Because key roles moved, the index lists
+        in <code>rgb.c</code> need re-derivation against the new map during implementation.
+      </p>
+    </section>
+
+    <section>
+      <h2>OLED Plan</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Off-hand half &mdash; art</h3>
+          <p>
+            Keep the existing raw-bitmap emdashii logo (<code>oled_render_logo()</code>), which is what
+            <code>emdashii_38</code> renders. No change beyond confirming it still draws after the refactor.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Master half &mdash; info</h3>
+          <p>Four lines of live status:</p>
+          <ul>
+            <li><strong>Layer name</strong> &mdash; from <code>oled_render_layer_state()</code> (update the names to match the new 5-layer set; drop the Gaming case).</li>
+            <li><strong>Last key pressed</strong> &mdash; reuse the existing keylog renderer.</li>
+            <li><strong>Typing speed (WPM)</strong> &mdash; <code>get_current_wpm()</code> after enabling WPM.</li>
+            <li><strong>Modifier / caps state</strong> &mdash; <code>get_mods()</code> / <code>get_oneshot_mods()</code> for S C A G, plus <code>is_caps_word_on()</code> and the caps-lock LED.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        Required toggle: set <code>WPM_ENABLE = yes</code> in <code>rules.mk</code> (currently <code>no</code>). The
+        broken/disabled <code>set_keylog</code> experiments in <code>oled.c</code> can be cleaned up; the
+        <code>r2g</code>-derived keylog path already works and is what to build on.
+      </div>
+    </section>
+
+    <section>
+      <h2>Implementation Order</h2>
+      <ol>
+        <li><strong>Unblock the build:</strong> swap the removed keycodes (<code>RESET</code>&rarr;<code>QK_BOOT</code>, all <code>RGB_*</code>&rarr;<code>RM_*</code>) and confirm a clean compile of today's map.</li>
+        <li><strong>Trim layers:</strong> delete <code>_GAMING</code>; there is no separate utility layer to remove (combos already live on base). Update <code>enum crkbd_layers</code> and every reference.</li>
+        <li><strong>Rebuild the base layer</strong> per the map above: Tab/CapsWord/MO-Number pinky column, the new thumb cluster (Del / MO-Nav / Enter &mdash; LLock / Space / OSL-Fn), dedicated top-right Backspace.</li>
+        <li><strong>Merge Symbol into Navigation</strong> and keep Number, Function, Adjust as their own layers. Wire Adjust access + exits.</li>
+        <li><strong>Define the macros</strong> (kept + any chosen additions) and re-attach the base combos.</li>
+        <li><strong>Rewrite RGB indicators</strong> against the new key positions and the held-vs-toggle hint rule.</li>
+        <li><strong>OLED:</strong> enable WPM, fix layer names, add the WPM + mod/caps lines, keep the art on the off-hand.</li>
+        <li><strong>Build + flash after each step</strong> so regressions stay isolated.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Settled Details</h2>
+      <ul>
+        <li><strong>Combo homes:</strong> <code>EMDASH</code> = <code>K+;</code> (grouped with the symbol/math combos); <code>DELEND</code> = <code>G+H</code>.</li>
+        <li><strong>Number layer:</strong> digits mirrored on both hands; no extra <code>Backspace</code>/<code>Tab</code> on the left.</li>
+        <li><strong>Right-outer thumb:</strong> word-delete on base, <strong>transparent</strong> on every other layer.</li>
+        <li><strong>Right-mid pinky:</strong> stays the dedicated <code>'</code> key &mdash; no second Enter. (<code>'</code>, <code>"</code>, <code>`</code> also live on Nav+Symbol.)</li>
+      </ul>
+      <p class="small">Planning questions are resolved; the map below is the build target.</p>
+    </section>
+
+    <footer>
+      Official QMK references used for this plan:
+      <a href="https://docs.qmk.fm/features/layer_lock">layer lock</a>,
+      <a href="https://docs.qmk.fm/one_shot_keys">one-shot keys</a>,
+      <a href="https://docs.qmk.fm/features/caps_word">caps word</a>,
+      <a href="https://docs.qmk.fm/features/combo">combos</a>,
+      <a href="https://docs.qmk.fm/features/rgb_matrix">RGB matrix</a>,
+      <a href="https://docs.qmk.fm/features/wpm">WPM</a>,
+      <a href="https://docs.qmk.fm/features/send_string">send string</a>.
+    </footer>
+  </main>
+
+  <script>
+  (function () {
+    var KEY = 46, KW = 40, PAD = 16, HALF_GAP = 70, THUMB_GAP = 14;
+    var CX = KW / 2, CY = KW / 2;
+
+    var families = {
+      math:  { color: '#0f5b78', name: 'Math' },
+      quote: { color: '#8b5e34', name: 'Quotes' },
+      line:  { color: '#c0398f', name: 'Line ops' },
+      text:  { color: '#2e7d32', name: 'Text / edit' }
+    };
+
+    // Base-layer labels (combo keys must be uniquely labelled).
+    var rowsL = [
+      ['Tab','Q','W','E','R','T'],
+      ['Cw','A','S','D','F','G'],
+      ['#','Z','X','C','V','B']
+    ];
+    var rowsR = [
+      ['Y','U','I','O','P','Bsp'],
+      ['H','J','K','L',';',"'"],
+      ['N','M',',','.','/','Esc']
+    ];
+    var thumbsL = ['Del','Nav','Ent'];
+    var thumbsR = ['Fn','Spc','C⌫'];
+
+    var combos = [
+      { a:'J', b:'K', out:'=',      fam:'math',  lab:-1 },
+      { a:'K', b:'L', out:'+',      fam:'math',  lab:-1 },
+      { a:'L', b:';', out:'−', fam:'math',  lab:-1 },
+      { a:'J', b:'L', out:'~',      fam:'math',  arc:'up' },
+      { a:'O', b:'P', out:'" "',    fam:'quote', lab:-1 },
+      { a:'I', b:'P', out:"' '",    fam:'quote', arc:'up' },
+      { a:'M', b:',', out:'Sel',    fam:'line',  lab:1 },
+      { a:',', b:'.', out:'Copy',   fam:'line',  lab:1 },
+      { a:'.', b:'/', out:'Dup',    fam:'line',  lab:1 },
+      { a:'K', b:';', out:'Em—', fam:'text', arc:'down' },
+      { a:'T', b:'Y', out:'Lorem',  fam:'text',  lab:-1 },
+      { a:'G', b:'H', out:'DelEnd', fam:'text',  lab:1 }
+    ];
+
+    function lx(col) { return PAD + col * KEY; }
+    function rx(col) { return PAD + 6 * KEY + HALF_GAP + col * KEY; }
+    function ry(row) { return PAD + row * KEY; }
+    var thumbY = ry(3) + THUMB_GAP;
+
+    var board = document.getElementById('comboBoard');
+    var keyByLabel = {};
+    var comboKeys = {};
+    combos.forEach(function (c) { comboKeys[c.a] = true; comboKeys[c.b] = true; });
+
+    function place(label, x, y) {
+      var d = document.createElement('div');
+      d.className = 'combo-key';
+      d.textContent = label;
+      d.style.left = x + 'px';
+      d.style.top = y + 'px';
+      board.appendChild(d);
+      keyByLabel[label] = { x: x, y: y, el: d };
+    }
+
+    rowsL.forEach(function (row, r) { row.forEach(function (lb, c) { place(lb, lx(c), ry(r)); }); });
+    rowsR.forEach(function (row, r) { row.forEach(function (lb, c) { place(lb, rx(c), ry(r)); }); });
+    thumbsL.forEach(function (lb, i) { place(lb, lx(3 + i), thumbY); });
+    thumbsR.forEach(function (lb, i) { place(lb, rx(i), thumbY); });
+
+    var W = rx(5) + KW + PAD;
+    var H = thumbY + KW + PAD;
+    board.style.width = W + 'px';
+    board.style.height = H + 'px';
+
+    var SVGNS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('class', 'combo-svg');
+    svg.setAttribute('width', W);
+    svg.setAttribute('height', H);
+    board.appendChild(svg);
+
+    function center(label) {
+      var k = keyByLabel[label];
+      return { x: k.x + CX, y: k.y + CY };
+    }
+
+    var active = { math: true, quote: true, line: true, text: true };
+
+    function render() {
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+      // highlight keys that belong to an active combo
+      for (var lb in keyByLabel) {
+        keyByLabel[lb].el.classList.remove('hot');
+      }
+
+      combos.forEach(function (c) {
+        if (!active[c.fam]) return;
+        var color = families[c.fam].color;
+        keyByLabel[c.a].el.classList.add('hot');
+        keyByLabel[c.b].el.classList.add('hot');
+
+        var A = center(c.a), B = center(c.b);
+        var mid = { x: (A.x + B.x) / 2, y: (A.y + B.y) / 2 };
+        var path = document.createElementNS(SVGNS, 'path');
+        var bx = mid.x, by = mid.y;
+
+        if (c.arc) {
+          var off = c.arc === 'up' ? -40 : 40;
+          path.setAttribute('d', 'M' + A.x + ' ' + A.y + ' Q' + mid.x + ' ' + (mid.y + off) + ' ' + B.x + ' ' + B.y);
+          by = mid.y + off * 0.5;
+        } else {
+          path.setAttribute('d', 'M' + A.x + ' ' + A.y + ' L' + B.x + ' ' + B.y);
+          if (c.lab) by = mid.y + c.lab * 20;
+        }
+        path.setAttribute('stroke', color);
+        svg.appendChild(path);
+
+        // badge
+        var g = document.createElementNS(SVGNS, 'g');
+        g.setAttribute('class', 'combo-badge');
+        var text = document.createElementNS(SVGNS, 'text');
+        text.setAttribute('x', bx);
+        text.setAttribute('y', by);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'central');
+        text.setAttribute('fill', '#fff');
+        text.textContent = c.out;
+        var w = Math.max(20, c.out.length * 7 + 12);
+        var rect = document.createElementNS(SVGNS, 'rect');
+        rect.setAttribute('x', bx - w / 2);
+        rect.setAttribute('y', by - 9);
+        rect.setAttribute('width', w);
+        rect.setAttribute('height', 18);
+        rect.setAttribute('rx', 6);
+        rect.setAttribute('fill', color);
+        g.appendChild(rect);
+        g.appendChild(text);
+        svg.appendChild(g);
+      });
+    }
+
+    // filter buttons
+    var filters = document.getElementById('comboFilters');
+    Object.keys(families).forEach(function (fam) {
+      var btn = document.createElement('button');
+      btn.innerHTML = '<span class="dot" style="background:' + families[fam].color + '"></span>' + families[fam].name;
+      btn.addEventListener('click', function () {
+        active[fam] = !active[fam];
+        btn.classList.toggle('off', !active[fam]);
+        render();
+      });
+      filters.appendChild(btn);
+    });
+
+    render();
+  })();
+  </script>
+</body>
+</html>
