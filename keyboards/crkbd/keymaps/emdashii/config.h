@@ -32,12 +32,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 200
 #define DEBOUNCE 10
 
-// Disable tap-then-hold auto-repeat so holding a mod-tap key never spits out
-// repeated letters (e.g. "aaaa"). With QUICK_TAP_TERM 0 a tap immediately
-// followed by a hold resolves as the HOLD (modifier); you must physically tap
-// again to repeat the letter. This is the modern replacement for the removed
-// TAPPING_FORCE_HOLD (defining that now triggers a build error).
-#define QUICK_TAP_TERM 0
+// Keep normal quick-tap behavior for layer-taps (including Space); the
+// per-key callback below disables tap auto-repeat only for home-row mods.
+// This is the modern replacement for the removed TAPPING_FORCE_HOLD option.
+#define QUICK_TAP_TERM TAPPING_TERM
+#define QUICK_TAP_TERM_PER_KEY
 
 // Let a home-row mod become a modifier when another key is tapped while it
 // remains held, without making ordinary rolling keypresses into modifiers.
