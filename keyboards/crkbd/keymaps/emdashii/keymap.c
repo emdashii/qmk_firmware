@@ -156,6 +156,22 @@ combo_t key_combos[] = {
     COMBO(combo_delend, DELEND),
 };
 
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_A:
+        case HOME_S:
+        case HOME_D:
+        case HOME_F:
+        case HOME_J:
+        case HOME_K:
+        case HOME_L:
+        case HOME_SCLN:
+            return true;
+        default:
+            return false;
+    }
+}
+
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {

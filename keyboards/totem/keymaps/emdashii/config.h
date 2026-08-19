@@ -9,16 +9,14 @@ for more options.
 // #define MASTER_RIGHT
 
 //#define TAPPING_TERM 170
-#define TAPPING_TERM 170
+#define TAPPING_TERM 160
+#define DEBOUNCE 10
 
-// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
-#define TAPPING_FORCE_HOLD
+// Disable tap-then-hold auto-repeat so holding a mod-tap key never spits out
+// repeated letters. This is the modern replacement for the removed
+// TAPPING_FORCE_HOLD option.
+#define QUICK_TAP_TERM 0
 
-// Auto Shift
-#define NO_AUTO_SHIFT_ALPHA
-#define AUTO_SHIFT_TIMEOUT TAPPING_TERM
-#define AUTO_SHIFT_NO_SETUP
-
-#undef LOCKING_SUPPORT_ENABLE
-#undef LOCKING_RESYNC_ENABLE
-#define NO_ACTION_ONESHOT
+// Let a home-row mod become a modifier when another key is tapped while it
+// remains held, without making ordinary rolling keypresses into modifiers.
+#define PERMISSIVE_HOLD_PER_KEY

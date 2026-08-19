@@ -28,11 +28,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-//#define TAPPING_FORCE_HOLD
-//#define TAPPING_TERM 100
-
 // Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 200
+#define DEBOUNCE 10
+
+// Disable tap-then-hold auto-repeat so holding a mod-tap key never spits out
+// repeated letters (e.g. "aaaa"). With QUICK_TAP_TERM 0 a tap immediately
+// followed by a hold resolves as the HOLD (modifier); you must physically tap
+// again to repeat the letter. This is the modern replacement for the removed
+// TAPPING_FORCE_HOLD (defining that now triggers a build error).
+#define QUICK_TAP_TERM 0
+
+// Let a home-row mod become a modifier when another key is tapped while it
+// remains held, without making ordinary rolling keypresses into modifiers.
+#define PERMISSIVE_HOLD_PER_KEY
 
 // Note: IGNORE_MOD_TAP_INTERRUPT was removed -- it is now the default mod-tap
 // behavior in current QMK and triggers a build error if still defined.
@@ -45,9 +54,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #undef RGBLIGHT_LIMIT_VAL
     #define RGBLIGHT_LIMIT_VAL 100
 #endif
-
-// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
-// #define TAPPING_FORCE_HOLD
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
